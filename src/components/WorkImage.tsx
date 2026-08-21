@@ -26,9 +26,14 @@ const WorkImage = (props: Props) => {
       <a
         className="work-image-in"
         href={props.link}
+        onClick={(e) => {
+          if (!props.link || props.link === "#") {
+            e.preventDefault();
+          }
+        }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={() => setIsVideo(false)}
-        target="_blank"
+        target={props.link && props.link !== "#" ? "_blank" : "_self"}
         data-cursor={"disable"}
       >
         {props.link && (

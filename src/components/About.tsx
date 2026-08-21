@@ -1,16 +1,28 @@
+import { useState, useEffect } from "react";
 import "./styles/About.css";
 
 const About = () => {
+  const [aboutText, setAboutText] = useState(
+    "I am a Digital nomad currently based in Agartala Tripura. I've been working in graphic design for the past 4 years. It was only in the past year that I decided to focus full-time on UI/UX Designing."
+  );
+
+  useEffect(() => {
+    fetch("/api/content")
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.content['about_text']) {
+          setAboutText(data.content['about_text']);
+        }
+      })
+      .catch(err => console.error("Error fetching about text:", err));
+  }, []);
+
   return (
     <div className="about-section" id="about">
       <div className="about-me">
         <h3 className="title">About Me</h3>
         <p className="para">
-          I am currently co-founder of CallHQ.ai, building real-time voice AI for
-          businesses. I am a technologist at heart with strong business judgment—
-          I enjoy going from product strategy to hands-on engineering. My background
-          spans leadership at Adobe, founding Broki and CallHQ, and shipping
-          full-stack products end to end.
+          {aboutText}
         </p>
       </div>
     </div>

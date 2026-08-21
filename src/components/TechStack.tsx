@@ -2,7 +2,8 @@ import * as THREE from "three";
 import { useRef, useMemo, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
-import { EffectComposer, N8AO } from "@react-three/postprocessing";
+import { EffectComposer, N8AO, Bloom, ChromaticAberration } from "@react-three/postprocessing";
+import { BlendFunction } from "postprocessing";
 import {
   BallCollider,
   Physics,
@@ -21,6 +22,15 @@ const imageUrls = [
   "/images/mysql.webp",
   "/images/typescript.webp",
   "/images/javascript.webp",
+  "/images/photoshop.webp",
+  "/images/illustrator.webp",
+  "/images/figma.webp",
+  "/images/xd.webp",
+  "/images/canva.webp",
+  "/images/procreate.webp",
+  "/images/indesign.webp",
+  "/images/premierepro.webp",
+  "/images/fresco.webp",
 ];
 const textures = imageUrls.map((url) => textureLoader.load(url));
 
@@ -64,6 +74,23 @@ function SphereGeo({
     api.current?.applyImpulse(impulse, true);
   });
 
+  const handlePointerDown = (e: any) => {
+    e.stopPropagation();
+    if (api.current) {
+      api.current.applyImpulse({
+        x: (Math.random() - 0.5) * 100,
+        y: Math.random() * 100 + 50, // jump up
+        z: (Math.random() - 0.5) * 100
+      }, true);
+      
+      api.current.applyTorqueImpulse({
+        x: (Math.random() - 0.5) * 20,
+        y: (Math.random() - 0.5) * 20,
+        z: (Math.random() - 0.5) * 20
+      }, true);
+    }
+  };
+
   return (
     <RigidBody
       linearDamping={0.75}
@@ -86,6 +113,7 @@ function SphereGeo({
         geometry={sphereGeometry}
         material={material}
         rotation={[0.3, 1, 1]}
+        onPointerDown={handlePointerDown}
       />
     </RigidBody>
   );
@@ -156,12 +184,11 @@ const TechStack = () => {
       (texture) =>
         new THREE.MeshPhysicalMaterial({
           map: texture,
-          emissive: "#ffffff",
-          emissiveMap: texture,
-          emissiveIntensity: 0.3,
-          metalness: 0.5,
-          roughness: 1,
-          clearcoat: 0.1,
+          metalness: 0.2,
+          roughness: 0.3,
+          clearcoat: 0.8,
+          clearcoatRoughness: 0.1,
+          envMapIntensity: 1.5
         })
     );
   }, []);
@@ -172,9 +199,11 @@ const TechStack = () => {
 
       <Canvas
         shadows
-        gl={{ alpha: true, stencil: false, depth: false, antialias: false }}
+        gl={{ alpha: true, stencil: false, depth: false, antialias: false, powerPreference: "high-performance" }}
         camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
-        onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}
+        dpr={[1, 1.5]}
+        performance={{ min: 0.5 }}
+        onCreated={(state) => (state.gl.toneMappingExposure = 1.0)}
         className="tech-canvas"
       >
         <ambientLight intensity={1} />
@@ -205,6 +234,13 @@ const TechStack = () => {
         />
         <EffectComposer enableNormalPass={false}>
           <N8AO color="#0f002c" aoRadius={2} intensity={1.15} />
+          <Bloom luminanceThreshold={0.5} mipmapBlur intensity={0.5} />
+          <ChromaticAberration 
+            blendFunction={BlendFunction.NORMAL} 
+            offset={new THREE.Vector2(0.001, 0.001)} 
+            radialModulation={false}
+            modulationOffset={0}
+          />
         </EffectComposer>
       </Canvas>
     </div>

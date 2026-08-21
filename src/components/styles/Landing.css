@@ -192,9 +192,13 @@
   font-family: "Geist", sans-serif;
 }
 
-/* .landing-intro h1 span {
-   font-weight: 200; 
-} */
+.landing-intro h1 span {
+  font-weight: 500;
+  font-size: 0.6em;
+  opacity: 1;
+  letter-spacing: 4px;
+  color: var(--accentColor);
+}
 
 .landing-info {
   position: absolute;
@@ -250,16 +254,7 @@ h2.landing-info-h2 {
 }
 
 .landing-info-h2::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 120%;
-  z-index: 3;
-  background-image: linear-gradient(0deg,
-      var(--backgroundColor) 40%,
-      rgba(0, 0, 0, 0) 110%);
-  top: 0;
-  left: 0;
+  display: none;
 }
 
 @media screen and (min-width: 500px) {

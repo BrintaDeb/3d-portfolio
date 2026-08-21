@@ -87,20 +87,20 @@ const WhatIDo = () => {
             <div className="what-corner"></div>
 
             <div className="what-content-in">
-              <h3>AI & AUTOMATION</h3>
-              <h4>Workflow Intelligence for Organizations</h4>
-              <p>
-                AI specialist helping organizations automate workflows—internal ops
-                and customer-facing—so teams ship faster with less manual work.
+              <h3>UI/UX DESIGN</h3>
+              <h4>Cinematic & Intuitive Interfaces</h4>
+              <p className="what-text-hide">
+                Specializing in high-end, dynamic interfaces. I blend aesthetics with usability to create 
+                experiences that feel premium, interactive, and seamless.
               </p>
-              <h5>Skillset & tools</h5>
-              <div className="what-content-flex">
-                <div className="what-tags">LLMs &amp; agents</div>
-                <div className="what-tags">Workflow design</div>
-                <div className="what-tags">RAG &amp; retrieval</div>
-                <div className="what-tags">Evals &amp; guardrails</div>
-                <div className="what-tags">Integrations</div>
-                <div className="what-tags">Product strategy</div>
+              <h5 className="what-text-hide">Skillset & tools</h5>
+              <div className="what-content-flex what-text-hide">
+                <div className="what-tags">Figma</div>
+                <div className="what-tags">Wireframing</div>
+                <div className="what-tags">Prototyping</div>
+                <div className="what-tags">User Research</div>
+                <div className="what-tags">Graphic Design</div>
+                <div className="what-tags">Cinematic 3D Integration</div>
               </div>
               <div className="what-arrow"></div>
             </div>
@@ -124,21 +124,91 @@ const WhatIDo = () => {
             </div>
             <div className="what-corner"></div>
             <div className="what-content-in">
-              <h3>BUILD &amp; SCALE</h3>
-              <h4>Shipping AI in Production</h4>
-              <p>
-                I build the systems behind it: APIs, data, voice/real-time, and
-                full-stack products—production-ready, not slide decks.
+              <h3>WEB DEVELOPMENT</h3>
+              <h4>Scalable & Performant Applications</h4>
+              <p className="what-text-hide">
+                From pixel-perfect frontend layouts to robust backend architectures. I build 
+                full-stack applications that are optimized for performance and SEO.
               </p>
-              <h5>Skillset & tools</h5>
-              <div className="what-content-flex">
-                <div className="what-tags">Node.js</div>
-                <div className="what-tags">Python</div>
-                <div className="what-tags">REST &amp; real-time APIs</div>
-                <div className="what-tags">PostgreSQL</div>
-                <div className="what-tags">MongoDB</div>
+              <h5 className="what-text-hide">Skillset & tools</h5>
+              <div className="what-content-flex what-text-hide">
                 <div className="what-tags">React</div>
-                <div className="what-tags">Cloud &amp; infra</div>
+                <div className="what-tags">Three.js</div>
+                <div className="what-tags">Framer Motion</div>
+                <div className="what-tags">Node.js</div>
+                <div className="what-tags">Server Management</div>
+                <div className="what-tags">SEO Optimization</div>
+              </div>
+              <div className="what-arrow"></div>
+            </div>
+          </div>
+          <div
+            className="what-content what-noTouch"
+            ref={(el) => setRef(el, 2)}
+          >
+            <div className="what-border1">
+              <svg height="100%">
+                <line
+                  x1="0"
+                  y1="100%"
+                  x2="100%"
+                  y2="100%"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeDasharray="6,6"
+                />
+              </svg>
+            </div>
+            <div className="what-corner"></div>
+            <div className="what-content-in">
+              <h3>GRAPHICS DESIGN</h3>
+              <h4>Visual Storytelling & Branding</h4>
+              <p className="what-text-hide">
+                Creating compelling visual narratives, branding, and digital assets that capture attention and communicate the right message across all platforms.
+              </p>
+              <h5 className="what-text-hide">Skillset & tools</h5>
+              <div className="what-content-flex what-text-hide">
+                <div className="what-tags">Photoshop</div>
+                <div className="what-tags">Illustrator</div>
+                <div className="what-tags">Indesign</div>
+                <div className="what-tags">Procreate</div>
+                <div className="what-tags">Branding</div>
+                <div className="what-tags">Logo Design</div>
+              </div>
+              <div className="what-arrow"></div>
+            </div>
+          </div>
+          <div
+            className="what-content what-noTouch"
+            ref={(el) => setRef(el, 3)}
+          >
+            <div className="what-border1">
+              <svg height="100%">
+                <line
+                  x1="0"
+                  y1="100%"
+                  x2="100%"
+                  y2="100%"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeDasharray="6,6"
+                />
+              </svg>
+            </div>
+            <div className="what-corner"></div>
+            <div className="what-content-in">
+              <h3>SEO MANAGEMENT</h3>
+              <h4>Data-Driven Growth Strategies</h4>
+              <p className="what-text-hide">
+                Optimizing content, keywords, and technical structure to improve rankings, drive organic traffic, and maximize visibility in search engines.
+              </p>
+              <h5 className="what-text-hide">Skillset & tools</h5>
+              <div className="what-content-flex what-text-hide">
+                <div className="what-tags">Google Analytics</div>
+                <div className="what-tags">Keyword Research</div>
+                <div className="what-tags">On-Page SEO</div>
+                <div className="what-tags">Content Strategy</div>
+                <div className="what-tags">Ahrefs</div>
               </div>
               <div className="what-arrow"></div>
             </div>

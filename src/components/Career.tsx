@@ -1,6 +1,30 @@
+import { useState, useEffect } from "react";
 import "./styles/Career.css";
 
 const Career = () => {
+  const [timeline, setTimeline] = useState([
+    { date: "JAN 2024 - PRESENT", title: "Motion Graphics & Web Developer", status: "NOW", desc: "Working with websites and managing all media @ World Mark Foundation." },
+    { date: "OCT 2024 - DEC 2024", title: "Image Editing and Designing", status: "DONE", desc: "Working with targets and managing design for Ajio products @ Netscribes India Pvt. Ltd." },
+    { date: "JUNE 2024 - AUG 2024", title: "Graphic Designer", status: "DONE", desc: "Working with a big development team to manage design, content, branding and social media @ Minerva Infotech." },
+    { date: "2019 - 2021", title: "Junior Graphic Designer", status: "DONE", desc: "Working with a small team to manage design, content, branding and logo design @ Angel Engineering Solution." }
+  ]);
+
+  useEffect(() => {
+    fetch("/api/content")
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.content['career_timeline']) {
+          try {
+            const parsed = JSON.parse(data.content['career_timeline']);
+            setTimeline(parsed);
+          } catch (e) {
+            console.error("Failed to parse career timeline JSON");
+          }
+        }
+      })
+      .catch(err => console.error("Error fetching career text:", err));
+  }, []);
+
   return (
     <div className="career-section section-container">
       <div className="career-container">
@@ -12,63 +36,20 @@ const Career = () => {
           <div className="career-timeline">
             <div className="career-dot"></div>
           </div>
-          <div className="career-info-box">
-            <div className="career-info-in">
-              <div className="career-role">
-                <h4>Co-Founder</h4>
-                <h5>CallHQ.ai</h5>
+          
+          {timeline.map((item, index) => (
+            <div className="career-info-box" key={index}>
+              <div className="career-info-in">
+                <div className="career-role">
+                  <h4>{item.date}</h4>
+                  <h5>{item.title}</h5>
+                </div>
+                <h3>{item.status}</h3>
               </div>
-              <h3>NOW</h3>
+              <p>{item.desc}</p>
             </div>
-            <p>
-              Building CallHQ.ai, a voice AI platform for
-              automating customer calls, support, and conversions.
-            </p>
-          </div>
-          <div className="career-info-box">
-            <div className="career-info-in">
-              <div className="career-role">
-                <h4>Adobe</h4>
-                <h5>6+ years · Noida</h5>
-              </div>
-              <h3>2017–24</h3>
-            </div>
-            <p>
-              Senior Lead Software Engineer (Feb 2024 – May 2024). Lead Software
-              Engineer (Feb 2021 – Feb 2024). Software Engineer II (Dec 2017 –
-              Feb 2021): internationalization, globalization, and localization for
-              Adobe Technical Communication Suite; functional and linguistic testing
-              strategy; in-house tooling; collaboration with product and engineering
-              for high-quality localized releases.
-            </p>
-          </div>
-          <div className="career-info-box">
-            <div className="career-info-in">
-              <div className="career-role">
-                <h4>Consultant</h4>
-                <h5>Genpact Headstrong </h5>
-              </div>
-              <h3>2016–17</h3>
-            </div>
-            <p>
-              Sep 2016 – Nov 2017. Developed and maintained WCF services consumed
-              by the UI; deployment support across environments; NUnit tests and
-              coverage; bug fixes from QA and users; database work.
-            </p>
-          </div>
-          <div className="career-info-box">
-            <div className="career-info-in">
-              <div className="career-role">
-                <h4>Sf Engineer</h4>
-                <h5>Infogain</h5>
-              </div>
-              <h3>2013-16</h3>
-            </div>
-            <p>
-              Software engineering across enterprise projects, contributing to
-              design, development, and delivery of business applications.
-            </p>
-          </div>
+          ))}
+          
         </div>
       </div>
     </div>

@@ -28,31 +28,41 @@ const Navbar = () => {
       let element = elem as HTMLAnchorElement;
       element.addEventListener("click", (e) => {
         if (window.innerWidth > 1024) {
-          e.preventDefault();
           let elem = e.currentTarget as HTMLAnchorElement;
           let section = elem.getAttribute("data-href");
-          smoother.scrollTo(section, true, "top top");
+          if (section) {
+            e.preventDefault();
+            smoother.scrollTo(section, true, "top top");
+          }
         }
       });
     });
-    window.addEventListener("resize", () => {
+    const handleResize = () => {
       ScrollSmoother.refresh(true);
-    });
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      if (smoother) {
+        smoother.kill();
+      }
+    };
   }, []);
   return (
     <>
       <div className="header">
         <a href="/#" className="navbar-title" data-cursor="disable">
-          AM
+          BD
         </a>
         <a
-          href="https://www.linkedin.com/in/akashrmalhotra/"
+          href="https://www.linkedin.com/in/brinta-deb-413656220"
           className="navbar-connect"
           data-cursor="disable"
           target="_blank"
           rel="noreferrer"
         >
-          linkedin.com/in/akashrmalhotra
+          linkedin.com/in/brinta-deb
         </a>
         <ul>
           <li>
@@ -69,6 +79,31 @@ const Navbar = () => {
             <a data-href="#contact" href="#contact">
               <HoverLinks text="CONTACT" />
             </a>
+          </li>
+          <li>
+            <a href="/admin" data-cursor="disable" style={{ textDecoration: 'none' }}>
+              <HoverLinks text="ADMIN" />
+            </a>
+          </li>
+          <li>
+            <button 
+              onClick={() => {
+                const current = document.documentElement.dataset.theme;
+                document.documentElement.dataset.theme = current === 'light' ? 'dark' : 'light';
+              }} 
+              style={{
+                background: 'transparent',
+                border: '1px solid var(--accentColor)',
+                color: 'var(--textColor)',
+                padding: '0.5rem 1rem',
+                borderRadius: '20px',
+                cursor: 'pointer',
+                marginLeft: '1rem'
+              }}
+              data-cursor="disable"
+            >
+              Toggle Theme
+            </button>
           </li>
         </ul>
       </div>
