@@ -1,3 +1,4 @@
+import { apiFetch } from "../api";
 import { useState, useEffect } from "react";
 import "./styles/About.css";
 
@@ -7,7 +8,7 @@ const About = () => {
   );
 
   useEffect(() => {
-    fetch("/api/content")
+    apiFetch("/api/content")
       .then(res => res.json())
       .then(data => {
         if (data.success && data.content['about_text']) {

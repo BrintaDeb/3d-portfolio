@@ -1,3 +1,4 @@
+import { apiFetch } from "../api";
 import { useState, useRef } from 'react';
 import './styles/AdminProjectUpload.css';
 
@@ -14,7 +15,7 @@ const AdminProjectUpload = ({ onProjectAdded }: { onProjectAdded: () => void }) 
     const formData = new FormData(formRef.current);
     
     try {
-      const res = await fetch('/api/projects', {
+      const res = await apiFetch('/api/projects', {
         method: 'POST',
         body: formData,
       });

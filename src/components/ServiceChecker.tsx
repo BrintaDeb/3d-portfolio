@@ -1,3 +1,4 @@
+import { apiFetch } from "../api";
 import { useState } from "react";
 import { FaCheck, FaCalculator } from "react-icons/fa";
 import "./styles/ServiceChecker.css";
@@ -50,7 +51,7 @@ Estimated Cost: ₹${estimatedTotal.toLocaleString('en-IN')}/mo.
 User Notes: ${data.notes}`;
 
     try {
-      await fetch("/api/leads", {
+      await apiFetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 

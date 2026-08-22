@@ -1,3 +1,4 @@
+import { apiFetch } from "../api";
 import { useState, useCallback, useEffect, useRef } from "react";
 import "./styles/Work.css";
 import gsap from "gsap";
@@ -60,7 +61,7 @@ const Work = () => {
 
   const fetchProjects = async () => {
     try {
-      const res = await fetch("/api/projects");
+      const res = await apiFetch("/api/projects");
       const data = await res.json();
       if (data.success && data.projects && data.projects.length > 0) {
         const mapped = data.projects.map((p: any) => ({

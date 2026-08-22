@@ -1,3 +1,4 @@
+import { apiFetch } from "../api";
 import { useEffect, useRef } from "react";
 import { MdArrowOutward, MdCopyright } from "react-icons/md";
 import Tilt from "react-parallax-tilt";
@@ -102,7 +103,7 @@ const Contact = () => {
                   e.preventDefault();
                   const formData = new FormData(e.currentTarget);
                   const data = Object.fromEntries(formData.entries());
-                  await fetch("/api/leads", {
+                  await apiFetch("/api/leads", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ ...data, budget: "N/A", timeline: "N/A", company: "N/A", projectType: "Contact Form" })

@@ -1,3 +1,4 @@
+import { apiFetch } from "../api";
 import { useState } from "react";
 import AdminProjectUpload from "../components/AdminProjectUpload";
 
@@ -8,7 +9,7 @@ const AdminDashboard = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch("/api/login", {
+    const res = await apiFetch("/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password })
@@ -50,7 +51,7 @@ const AdminContentEditor = () => {
   const [contentMap, setContentMap] = useState<Record<string, string>>({});
   
   const fetchContent = async () => {
-    const res = await fetch("/api/content");
+    const res = await apiFetch("/api/content");
     const data = await res.json();
     if (data.success) {
       setContentMap(data.content);
@@ -61,7 +62,7 @@ const AdminContentEditor = () => {
 
   const handleSave = async (key: string) => {
     const value = contentMap[key];
-    await fetch("/api/content", {
+    await apiFetch("/api/content", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ key, value })

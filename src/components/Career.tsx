@@ -1,3 +1,4 @@
+import { apiFetch } from "../api";
 import { useState, useEffect } from "react";
 import "./styles/Career.css";
 
@@ -11,7 +12,7 @@ const Career = () => {
   ]);
 
   useEffect(() => {
-    fetch("/api/content")
+    apiFetch("/api/content")
       .then(res => res.json())
       .then(data => {
         if (data.success && data.content['career_timeline']) {

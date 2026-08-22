@@ -1,3 +1,4 @@
+import { apiFetch } from "../api";
 import { useState, useEffect, useRef } from "react";
 import { FaCheck } from "react-icons/fa";
 import { BsQuestionLg } from "react-icons/bs";
@@ -272,7 +273,7 @@ const ServicesPricing = () => {
     const data = Object.fromEntries(formData.entries());
     
     try {
-      await fetch("/api/leads", {
+      await apiFetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
