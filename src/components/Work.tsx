@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import "./styles/Work.css";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Tilt from "react-parallax-tilt";
 gsap.registerPlugin(ScrollTrigger);
 import WorkImage from "./WorkImage";
 import Knob from "./Knob";
@@ -10,6 +11,7 @@ interface Project {
   category: string;
   tools: string;
   image: string;
+  images?: string[];
   link: string;
   mediaType?: string;
 }
@@ -61,12 +63,12 @@ const Work = () => {
       const res = await fetch("/api/projects");
       const data = await res.json();
       if (data.success && data.projects && data.projects.length > 0) {
-        // Map the backend structure to our frontend structure
         const mapped = data.projects.map((p: any) => ({
           title: p.title,
-          category: "Uploaded Project",
+          category: p.category || "Uploaded Project",
           tools: p.description,
           image: p.mediaUrl || "/images/web_dev.jpg",
+          images: p.mediaUrls || [],
           link: "#",
           mediaType: p.mediaType
         }));
@@ -82,6 +84,8 @@ const Work = () => {
   }, []);
 
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  
   useEffect(() => {
     if (titleRef.current) {
       gsap.fromTo(
@@ -100,6 +104,25 @@ const Work = () => {
         }
       );
     }
+    
+    if (carouselRef.current) {
+      gsap.fromTo(
+        carouselRef.current,
+        { opacity: 0, scale: 0.95, y: 50 },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 1.2,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: carouselRef.current,
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    }
   }, []);
 
   const goToSlide = useCallback((index: number) => {
@@ -113,7 +136,7 @@ const Work = () => {
           My <span>Work</span>
         </h2>
           
-          <div className="carousel-layout">
+          <div className="carousel-layout" ref={carouselRef}>
             <div className="carousel-track-container">
               <div
                 className="carousel-track"
@@ -124,21 +147,45 @@ const Work = () => {
                 {dynamicProjects.map((project, index) => (
                   <div className="carousel-slide" key={index}>
                     <div className="carousel-content">
-                      <div className="carousel-image-wrapper">
-                        {project.mediaType === 'video' ? (
-                           <video src={project.image} autoPlay loop muted playsInline />
-                        ) : (
-                           <WorkImage
-                             image={project.image}
-                             alt={project.title}
-                             link={project.link}
-                           />
-                        )}
-                        <div className="carousel-overlay-text">
-                          <h4>{project.title}</h4>
-                          <p>{project.tools}</p>
+                      <Tilt
+                        tiltMaxAngleX={5}
+                        tiltMaxAngleY={5}
+                        perspective={1000}
+                        transitionSpeed={1000}
+                        scale={1.02}
+                        gyroscope={true}
+                        glareEnable={true}
+                        glareMaxOpacity={0.15}
+                        glarePosition="all"
+                        className="carousel-tilt-wrapper"
+                      >
+                        <div className="carousel-image-wrapper">
+                          {project.mediaType === 'video' ? (
+                             <video src={project.image} autoPlay loop muted playsInline />
+                          ) : (
+                             project.images && project.images.length > 1 ? (
+                               <div className="inner-carousel">
+                                 {project.images.map((img, i) => (
+                                   <div className="inner-carousel-slide" key={i}>
+                                     <WorkImage image={img} alt={`${project.title} - ${i}`} link={project.link} />
+                                   </div>
+                                 ))}
+                               </div>
+                             ) : (
+                               <WorkImage
+                                 image={project.image}
+                                 alt={project.title}
+                                 link={project.link}
+                               />
+                             )
+                          )}
+                          <div className="carousel-overlay-text">
+                            <span className="project-category-badge">{project.category}</span>
+                            <h4>{project.title}</h4>
+                            <p>{project.tools}</p>
+                          </div>
                         </div>
-                      </div>
+                      </Tilt>
                     </div>
                   </div>
                 ))}

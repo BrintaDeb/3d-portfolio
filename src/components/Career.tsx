@@ -3,7 +3,8 @@ import "./styles/Career.css";
 
 const Career = () => {
   const [timeline, setTimeline] = useState([
-    { date: "JAN 2024 - PRESENT", title: "Motion Graphics & Web Developer", status: "NOW", desc: "Working with websites and managing all media @ World Mark Foundation." },
+    { date: "JUNE 2025 - PRESENT", title: "Freelance Web Dev, Graphics & SEO", status: "NOW", desc: "Providing independent web development, graphic design, and SEO services." },
+    { date: "JAN 2024 - MAY 2025", title: "Motion Graphics & Web Developer", status: "DONE", desc: "Working with websites and managing all media doing freelance." },
     { date: "OCT 2024 - DEC 2024", title: "Image Editing and Designing", status: "DONE", desc: "Working with targets and managing design for Ajio products @ Netscribes India Pvt. Ltd." },
     { date: "JUNE 2024 - AUG 2024", title: "Graphic Designer", status: "DONE", desc: "Working with a big development team to manage design, content, branding and social media @ Minerva Infotech." },
     { date: "2019 - 2021", title: "Junior Graphic Designer", status: "DONE", desc: "Working with a small team to manage design, content, branding and logo design @ Angel Engineering Solution." }

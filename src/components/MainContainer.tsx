@@ -1,15 +1,17 @@
 import { lazy, PropsWithChildren, Suspense, useEffect, useState } from "react";
-import About from "./About";
-import Career from "./Career";
-import Contact from "./Contact";
 import Cursor from "./Cursor";
 import Landing from "./Landing";
 import Navbar from "./Navbar";
 import SocialIcons from "./SocialIcons";
-import WhatIDo from "./WhatIDo";
-import Work from "./Work";
 import setSplitText from "./utils/splitText";
 
+const About = lazy(() => import("./About"));
+const Career = lazy(() => import("./Career"));
+const Contact = lazy(() => import("./Contact"));
+const WhatIDo = lazy(() => import("./WhatIDo"));
+const Work = lazy(() => import("./Work"));
+const FAQ = lazy(() => import("./FAQ"));
+const ServicesPricing = lazy(() => import("./ServicesPricing"));
 const TechStack = lazy(() => import("./TechStack"));
 
 const MainContainer = ({ children }: PropsWithChildren) => {
@@ -39,16 +41,16 @@ const MainContainer = ({ children }: PropsWithChildren) => {
         <div id="smooth-content">
           <div className="container-main">
             <Landing>{!isDesktopView && children}</Landing>
-            <About />
-            <WhatIDo />
-            <Career />
-            <Work />
-            {isDesktopView && (
-              <Suspense fallback={<div>Loading....</div>}>
-                <TechStack />
-              </Suspense>
-            )}
-            <Contact />
+            <Suspense fallback={<div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#22d3ee' }}>Loading sections...</div>}>
+              <About />
+              <WhatIDo />
+              <Career />
+              <Work />
+              {isDesktopView && <TechStack />}
+              <FAQ />
+              <ServicesPricing />
+              <Contact />
+            </Suspense>
           </div>
         </div>
       </div>

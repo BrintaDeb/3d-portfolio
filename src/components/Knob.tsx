@@ -37,8 +37,8 @@ const Knob3DModel = ({ rotationAngle }: { rotationAngle: number }) => {
       </mesh>
       
       {/* Top Cap Bevel */}
-      <mesh position={[0, 0, 0.4]} castShadow receiveShadow>
-        <cylinderGeometry args={[2.1, 2.2, 0.1, 64]} rotation={[Math.PI / 2, 0, 0]}/>
+      <mesh position={[0, 0, 0.4]} rotation={[Math.PI / 2, 0, 0]} castShadow receiveShadow>
+        <cylinderGeometry args={[2.1, 2.2, 0.1, 64]} />
         <meshStandardMaterial color="#222" metalness={0.6} roughness={0.4} />
       </mesh>
 
@@ -128,7 +128,7 @@ const Knob: React.FC<KnobProps> = ({ itemsCount, currentIndex, onChange }) => {
     let normalizedRot = newRotation % 360;
     if (normalizedRot < 0) normalizedRot += 360;
     
-    let index = Math.round(normalizedRot / segment) % itemsCount;
+    const index = Math.round(normalizedRot / segment) % itemsCount;
     if (index !== currentIndex) {
       onChange(index);
     }

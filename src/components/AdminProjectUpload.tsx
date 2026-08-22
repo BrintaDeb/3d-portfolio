@@ -58,6 +58,18 @@ const AdminProjectUpload = ({ onProjectAdded }: { onProjectAdded: () => void }) 
                 <textarea name="description" rows={4} required></textarea>
               </div>
               <div className="form-group">
+                <label>Project Category / Criteria</label>
+                <select name="category" required>
+                  <option value="Web Design">Web Design</option>
+                  <option value="Graphic Design">Graphic Design</option>
+                  <option value="UI/UX Design">UI/UX Design</option>
+                  <option value="Motion Graphics">Motion Graphics</option>
+                  <option value="SEO Management">SEO Management</option>
+                  <option value="Social Media">Social Media</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div className="form-group">
                 <label>Media Type</label>
                 <select name="mediaType">
                   <option value="image">Image</option>
@@ -65,8 +77,8 @@ const AdminProjectUpload = ({ onProjectAdded }: { onProjectAdded: () => void }) 
                 </select>
               </div>
               <div className="form-group">
-                <label>Upload File</label>
-                <input type="file" name="media" accept="image/*,video/*" required />
+                <label>Upload File(s)</label>
+                <input type="file" name="media" accept="image/*,video/*" multiple required />
               </div>
               <button type="submit" className="submit-btn" disabled={loading}>
                 {loading ? 'Uploading...' : 'Save Project'}

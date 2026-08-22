@@ -111,12 +111,13 @@
   position: absolute;
   max-width: 1920px;
   max-height: 1080px;
-  transform: translateX(-50%);
+  margin: 0 auto;
+  left: 0;
+  right: 0;
   width: 100%;
-  left: 50%;
   z-index: 0;
   bottom: 50px;
-  pointer-events: inherit;
+  pointer-events: none; /* Prevents blocking clicks on navbar/links */
 }
 
 .character-model::after {
@@ -170,9 +171,9 @@
 
 .landing-intro {
   position: absolute;
-  z-index: 9;
-  top: 12%;
-  left: 0;
+  z-index: 10;
+  top: 15%;
+  left: 5%;
 }
 
 .landing-intro h2 {
@@ -202,11 +203,10 @@
 
 .landing-info {
   position: absolute;
-  right: 50%;
-  transform: translateX(50%);
-  bottom: 40px;
-  top: inherit;
-  z-index: 9;
+  left: 5%;
+  bottom: 50px;
+  top: auto;
+  z-index: 10;
 }
 
 .landing-info h3 {
