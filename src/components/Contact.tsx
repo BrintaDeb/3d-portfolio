@@ -23,23 +23,7 @@ const Contact = () => {
     return () => window.removeEventListener("resize", checkViewport);
   }, []);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(".contact-flex", 
-        { y: 40, opacity: 0 }, 
-        { 
-          y: 0, opacity: 1, duration: 0.8, ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".contact-flex",
-            start: "top 85%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      );
-    }, sectionRef);
 
-    return () => ctx.revert();
-  }, []);
 
   const handleContactSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

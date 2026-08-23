@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
@@ -9,6 +9,8 @@ gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
 export let smoother: ScrollSmoother;
 
 const Navbar = () => {
+  const [theme, setTheme] = useState<string>("dark");
+
   useEffect(() => {
     smoother = ScrollSmoother.create({
       wrapper: "#smooth-wrapper",
@@ -54,6 +56,13 @@ const Navbar = () => {
       }
     };
   }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === "light" ? "dark" : "light";
+    document.documentElement.dataset.theme = nextTheme;
+    setTheme(nextTheme);
+  };
+
   return (
     <>
       <div className="header">
@@ -92,22 +101,13 @@ const Navbar = () => {
           </li>
           <li>
             <button 
-              onClick={() => {
-                const current = document.documentElement.dataset.theme;
-                document.documentElement.dataset.theme = current === 'light' ? 'dark' : 'light';
-              }} 
-              style={{
-                background: 'transparent',
-                border: '1px solid var(--accentColor)',
-                color: 'var(--textColor)',
-                padding: '0.5rem 1rem',
-                borderRadius: '20px',
-                cursor: 'pointer',
-                marginLeft: '1rem'
-              }}
+              onClick={toggleTheme}
+              className="navbar-theme-btn"
               data-cursor="disable"
+              title="Toggle Theme"
+              aria-label="Toggle Theme"
             >
-              Toggle Theme
+              {theme === "light" ? "🌙" : "☀️"}
             </button>
           </li>
         </ul>

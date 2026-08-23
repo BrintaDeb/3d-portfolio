@@ -245,35 +245,7 @@ const ServicesPricing = () => {
     return () => window.removeEventListener("resize", checkViewport);
   }, []);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(".pricing-card-tilt", 
-        { y: 30, opacity: 0 }, 
-        { 
-          y: 0, opacity: 1, duration: 0.6, stagger: 0.08, ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".pricing-grid",
-            start: "top 85%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      );
 
-      gsap.fromTo(".customer-brief-section", 
-        { y: 30, opacity: 0 }, 
-        { 
-          y: 0, opacity: 1, duration: 0.6, ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".customer-brief-section",
-            start: "top 85%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      );
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, [activeTab]);
 
   const activeCategory = serviceCategories.find(cat => cat.id === activeTab);
 

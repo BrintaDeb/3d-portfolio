@@ -4,14 +4,14 @@
   width: var(--cWidth);
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
+  padding: 8px 14px;
   box-sizing: border-box;
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  top: 12px;
+  top: 10px;
   z-index: 9999;
-  background: rgba(5, 8, 16, 0.75);
+  background: rgba(5, 8, 16, 0.8);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -20,15 +20,15 @@
 }
 
 .header ul {
-  font-size: 13px;
+  font-size: 12px;
   display: flex;
   flex-direction: row;
   margin: 0;
   padding: 0;
   list-style: none;
-  column-gap: 16px;
-  row-gap: 4px;
+  column-gap: 12px;
   align-items: center;
+  flex-wrap: nowrap;
 }
 
 .header ul li {
@@ -40,10 +40,28 @@
   white-space: nowrap;
 }
 
-.header ul li button {
-  padding: 4px 10px !important;
-  font-size: 11px !important;
-  margin-left: 4px !important;
+.navbar-theme-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 4px;
+  color: #fff;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.navbar-theme-btn:hover {
+  background: rgba(94, 234, 212, 0.2);
+  border-color: var(--accentColor);
+  transform: scale(1.05);
 }
 
 .navbar-connect {
@@ -57,12 +75,23 @@
 
 .navbar-title {
   font-weight: 800;
-  font-size: 16px;
+  font-size: 15px;
   letter-spacing: 1px;
   color: var(--accentColor);
   padding: 4px 8px;
   border-radius: 8px;
   background: rgba(94, 234, 212, 0.1);
+  flex-shrink: 0;
+}
+
+@media only screen and (min-width: 480px) {
+  .header {
+    padding: 10px 16px;
+  }
+  .header ul {
+    column-gap: 16px;
+    font-size: 13px;
+  }
 }
 
 @media only screen and (min-width: 768px) {
@@ -74,10 +103,11 @@
     column-gap: 28px;
     font-size: 14px;
   }
-  .header ul li button {
-    padding: 6px 14px !important;
-    font-size: 12px !important;
-    margin-left: 8px !important;
+  .navbar-theme-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+    margin-left: 8px;
   }
   .navbar-connect {
     display: block;

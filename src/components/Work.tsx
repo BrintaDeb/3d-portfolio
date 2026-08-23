@@ -88,45 +88,6 @@ const Work = () => {
 
   const titleRef = useRef<HTMLHeadingElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
-  
-  useEffect(() => {
-    if (titleRef.current) {
-      gsap.fromTo(
-        titleRef.current,
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: titleRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
-    }
-    
-    if (carouselRef.current) {
-      gsap.fromTo(
-        carouselRef.current,
-        { opacity: 0, scale: 0.95, y: 50 },
-        {
-          opacity: 1,
-          scale: 1,
-          y: 0,
-          duration: 1.2,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: carouselRef.current,
-            start: "top 85%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      );
-    }
-  }, []);
 
   const goToSlide = useCallback((index: number) => {
     setCurrentIndex(index);
