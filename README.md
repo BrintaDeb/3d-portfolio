@@ -1,10 +1,7 @@
-# 3D Portfolio Website
+# Shreyam (BrintaDeb) — 3D Portfolio
 
-This repository contains the source code for a personal 3D portfolio built with React, TypeScript, Three.js, React Three Fiber, and GSAP. It includes animated page sections, a character scene, custom cursor interactions, and smooth transitions designed for a modern portfolio experience.
+This repository contains the source code for the personal 3D portfolio of **Shreyam (BrintaDeb)** built with React, TypeScript, Three.js, React Three Fiber, Rapier Physics, and GSAP. It includes animated page sections, an interactive 3D character scene, custom 3D knob project browsing, physics-based tech stack, and smooth transitions.
 
-Live site: [https://akashrmalhotra.netlify.app/](https://akashrmalhotra.netlify.app/)
-
-![Portfolio Preview](public/images/preview1.png)
 
 ## Table of Contents
 
