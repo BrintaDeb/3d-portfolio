@@ -405,18 +405,23 @@
   box-shadow: none;
 }
 
-/* Responsive updates for brief section */
+/* Responsive updates for pricing & brief section */
 @media screen and (max-width: 1200px) {
   .pricing-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
   }
 }
 
 @media screen and (max-width: 900px) {
+  .pricing-section {
+    padding: 60px 0;
+  }
+
   .customer-brief-section {
     grid-template-columns: 1fr;
-    padding: 40px 30px;
-    gap: 40px;
+    padding: 35px 24px;
+    gap: 30px;
   }
   
   .brief-content-wrapper {
@@ -426,33 +431,68 @@
 }
 
 @media screen and (max-width: 768px) {
+  .pricing-section {
+    padding: 40px 0;
+  }
+
+  .pricing-container {
+    width: 100%;
+  }
+
   .pricing-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
   
   .pricing-section .title {
-    font-size: 2.2rem;
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+    margin-bottom: 15px;
+  }
+
+  .pricing-tabs {
+    gap: 8px;
+    padding: 6px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .pricing-tab {
+    padding: 8px 14px;
+    font-size: 0.85rem;
   }
   
   .fixed-price {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
   }
 
   .brief-input-group {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    gap: 12px;
   }
   
   .hourly-content h4 {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
+  }
+
+  .hourly-content p {
+    font-size: 1rem;
   }
 }
 
 @media screen and (max-width: 480px) {
   .customer-brief-section {
-    padding: 30px 20px;
+    padding: 24px 16px;
+    border-radius: 16px;
   }
   
   .brief-form {
-    padding: 25px 20px;
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+
+  .pricing-card {
+    padding: 24px 16px;
   }
 }

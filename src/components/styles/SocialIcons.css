@@ -81,23 +81,53 @@ div.resume-button span {
   width: 100%;
   z-index: 99999;
 }
-@media only screen and (min-width: 900px) {
+@media only screen and (max-width: 767px) {
+  .resume-button {
+    bottom: 20px;
+    right: 16px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    transform: none;
+    background: rgba(5, 8, 16, 0.85);
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
+@media only screen and (min-width: 768px) {
   .social-icons {
     display: flex;
+    gap: 16px;
+  }
+  .social-icons a {
+    font-size: 24px;
+  }
+  .resume-button {
+    transform: none;
+    font-size: 18px;
+    line-height: 18px;
+  }
+  div.resume-button span {
+    font-size: 20px;
+    margin-top: -1.5px;
+  }
+}
+
+@media only screen and (min-width: 1025px) {
+  .social-icons {
     gap: 20px;
   }
   .social-icons a {
     font-size: 28px;
   }
-}
-@media only screen and (min-width: 768px) {
   .resume-button {
-    transform: none;
     font-size: 20px;
     line-height: 20px;
   }
   div.resume-button span {
     font-size: 23px;
-    margin-top: -1.5px;
   }
 }

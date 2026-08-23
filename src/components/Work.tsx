@@ -7,6 +7,7 @@ import Tilt from "react-parallax-tilt";
 gsap.registerPlugin(ScrollTrigger);
 import WorkImage from "./WorkImage";
 import Knob from "./Knob";
+
 interface Project {
   title: string;
   category: string;
@@ -58,6 +59,7 @@ const projects: Project[] = [
 const Work = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [dynamicProjects, setDynamicProjects] = useState<Project[]>(projects);
+  const touchStartX = useRef<number | null>(null);
 
   const fetchProjects = async () => {
     try {
@@ -121,59 +123,110 @@ const Work = () => {
             start: "top 85%",
             toggleActions: "play none none reverse"
           }
-                        tiltMaxAngleY={5}
-                        perspective={1000}
-                        transitionSpeed={1000}
-                        scale={1.02}
-                        gyroscope={true}
-                        glareEnable={true}
-                        glareMaxOpacity={0.15}
-                        glarePosition="all"
-                        className="carousel-tilt-wrapper"
-                      >
-                        <div className="carousel-image-wrapper">
-                          {project.mediaType === 'video' ? (
-                             <video src={project.image} autoPlay loop muted playsInline />
-                          ) : (
-                             project.images && project.images.length > 1 ? (
-                               <div className="inner-carousel">
-                                 {project.images.map((img, i) => (
-                                   <div className="inner-carousel-slide" key={i}>
-                                     <WorkImage image={img} alt={`${project.title} - ${i}`} link={project.link} />
-                                   </div>
-                                 ))}
-                               </div>
-                             ) : (
-                               <WorkImage
-                                 image={project.image}
-                                 alt={project.title}
-                                 link={project.link}
-                               />
-                             )
-                          )}
-                          <div className="carousel-overlay-text">
-                            <span className="project-category-badge">{project.category}</span>
-                            <h4>{project.title}</h4>
-                            <p>{project.tools}</p>
-                          </div>
+        }
+      );
+    }
+  }, []);
+
+  const goToSlide = useCallback((index: number) => {
+    setCurrentIndex(index);
+  }, []);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX.current - touchEndX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        setCurrentIndex((prev) => (prev + 1) % dynamicProjects.length);
+      } else {
+        setCurrentIndex((prev) => (prev - 1 + dynamicProjects.length) % dynamicProjects.length);
+      }
+    }
+    touchStartX.current = null;
+  };
+
+  return (
+    <div className="work-section" id="work">
+      <div className="work-container section-container">
+        <h2 ref={titleRef}>
+          My <span>Work</span>
+        </h2>
+          
+        <div className="carousel-layout" ref={carouselRef}>
+          <div 
+            className="carousel-track-container"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            <div
+              className="carousel-track"
+              style={{
+                transform: `translateX(-${currentIndex * 100}%)`,
+              }}
+            >
+              {dynamicProjects.map((project, index) => (
+                <div className="carousel-slide" key={index}>
+                  <div className="carousel-content">
+                    <Tilt
+                      tiltMaxAngleX={5}
+                      tiltMaxAngleY={5}
+                      perspective={1000}
+                      transitionSpeed={1000}
+                      scale={1.02}
+                      gyroscope={true}
+                      glareEnable={true}
+                      glareMaxOpacity={0.15}
+                      glarePosition="all"
+                      className="carousel-tilt-wrapper"
+                    >
+                      <div className="carousel-image-wrapper">
+                        {project.mediaType === 'video' ? (
+                           <video src={project.image} autoPlay loop muted playsInline />
+                        ) : (
+                           project.images && project.images.length > 1 ? (
+                             <div className="inner-carousel">
+                               {project.images.map((img, i) => (
+                                 <div className="inner-carousel-slide" key={i}>
+                                   <WorkImage image={img} alt={`${project.title} - ${i}`} link={project.link} />
+                                 </div>
+                               ))}
+                             </div>
+                           ) : (
+                             <WorkImage
+                               image={project.image}
+                               alt={project.title}
+                               link={project.link}
+                             />
+                           )
+                        )}
+                        <div className="carousel-overlay-text">
+                          <span className="project-category-badge">{project.category}</span>
+                          <h4>{project.title}</h4>
+                          <p>{project.tools}</p>
                         </div>
-                      </Tilt>
-                    </div>
+                      </div>
+                    </Tilt>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
-            
-            <div className="carousel-knob-side">
-              <Knob 
-                itemsCount={dynamicProjects.length} 
-                currentIndex={currentIndex} 
-                onChange={goToSlide} 
-              />
-            </div>
+          </div>
+          
+          <div className="carousel-knob-side">
+            <Knob 
+              itemsCount={dynamicProjects.length} 
+              currentIndex={currentIndex} 
+              onChange={goToSlide} 
+            />
           </div>
         </div>
       </div>
+    </div>
   );
 };
 

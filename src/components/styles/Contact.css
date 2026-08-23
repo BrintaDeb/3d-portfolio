@@ -176,21 +176,41 @@ a.contact-social {
 }
 
 @media only screen and (max-width: 900px) {
+  .contact-section {
+    margin-top: 40px;
+    padding-bottom: 40px;
+    width: 100%;
+  }
+  .contact-section h3 {
+    font-size: clamp(28px, 7vw, 40px);
+    margin-bottom: 24px;
+  }
   .contact-flex {
     flex-direction: column;
-    gap: 40px;
+    gap: 30px;
   }
   .contact-left {
-    gap: 40px;
+    gap: 24px;
   }
   .contact-left p {
     margin-bottom: 0px;
   }
-  .contact-section {
-    margin-top: 50px;
-    padding-bottom: 50px;
+  .contact-right {
+    width: 100%;
+    min-width: 0;
   }
-  .contact-container {
-    width: calc(100% - 25px);
+  .contact-form-wrapper {
+    padding: 24px 18px;
+    border-radius: 16px;
+  }
+  .contact-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    margin-top: 40px;
+    padding-top: 24px;
+  }
+  .contact-bottom-copy h5 {
+    font-size: 16px;
   }
 }

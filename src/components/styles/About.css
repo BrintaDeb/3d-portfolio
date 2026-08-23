@@ -8,41 +8,40 @@
   height: auto;
   width: var(--cWidth);
   margin: auto;
+  padding: 40px 0;
 }
 .about-me {
-  padding: 50px 0px;
-  padding-bottom: 0;
-  width: 500px;
-  max-width: calc(100% - 15px);
+  padding: 20px 0px;
+  width: 100%;
+  max-width: 650px;
 }
 .about-me h3 {
-  font-size: 25px;
+  font-size: clamp(16px, 3.5vw, 24px);
   text-transform: uppercase;
-  letter-spacing: 7px;
-  font-weight: 400;
+  letter-spacing: clamp(3px, 1vw, 7px);
+  font-weight: 500;
   color: var(--accentColor);
+  margin-bottom: 12px;
 }
 
 .about-me p {
-  font-size: 33px;
+  font-size: clamp(20px, 4.5vw, 30px);
   font-weight: 600;
-  line-height: 36px;
-  letter-spacing: 1px;
+  line-height: 1.35;
+  letter-spacing: 0.5px;
+  margin: 0;
 }
 
-@media only screen and (min-width: 600px) {
-  .about-section {
-    justify-content: center;
-  }
-}
 @media only screen and (min-width: 768px) {
-  .about-me {
-    width: 500px;
-    max-width: calc(100% - 70px);
-    transform: translateY(0%);
-  }
   .about-section {
-    opacity: 1;
+    padding: 60px 0;
+  }
+  .about-me {
+    max-width: 600px;
+  }
+  .about-me p {
+    font-size: 26px;
+    line-height: 34px;
   }
 }
 @media only screen and (min-width: 1025px) {
