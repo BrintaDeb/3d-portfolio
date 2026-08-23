@@ -45,9 +45,9 @@ const FAQ = () => {
               <div 
                 className="faq-answer" 
                 style={{ 
-                  maxHeight: activeIndex === index ? "200px" : "0",
+                  maxHeight: activeIndex === index ? "400px" : "0",
                   overflow: "hidden",
-                  transition: "max-height 0.3s ease-in-out, padding 0.3s ease"
+                  transition: "max-height 0.35s ease-in-out, padding 0.35s ease"
                 }}
               >
                 <p>{faq.answer}</p>

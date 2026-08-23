@@ -41,12 +41,12 @@ const MainContainer = ({ children }: PropsWithChildren) => {
         <div id="smooth-content">
           <div className="container-main">
             <Landing>{!isDesktopView && children}</Landing>
-            <Suspense fallback={<div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#22d3ee' }}>Loading sections...</div>}>
+            <Suspense fallback={<div style={{ minHeight: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#22d3ee' }}>Loading...</div>}>
               <About />
               <WhatIDo />
               <Career />
               <Work />
-              {isDesktopView && <TechStack />}
+              <TechStack />
               <FAQ />
               <ServicesPricing />
               <Contact />

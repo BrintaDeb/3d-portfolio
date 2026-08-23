@@ -4,6 +4,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
 import { EffectComposer, N8AO, Bloom, ChromaticAberration } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
+import Marquee from "react-fast-marquee";
 import {
   BallCollider,
   Physics,
@@ -12,28 +13,28 @@ import {
   RapierRigidBody,
 } from "@react-three/rapier";
 
-const textureLoader = new THREE.TextureLoader();
-const imageUrls = [
-  "/images/react2.webp",
-  "/images/next2.webp",
-  "/images/node2.webp",
-  "/images/express.webp",
-  "/images/mongo.webp",
-  "/images/mysql.webp",
-  "/images/typescript.webp",
-  "/images/javascript.webp",
-  "/images/photoshop.webp",
-  "/images/illustrator.webp",
-  "/images/figma.webp",
-  "/images/xd.webp",
-  "/images/canva.webp",
-  "/images/procreate.webp",
-  "/images/indesign.webp",
-  "/images/premierepro.webp",
-  "/images/fresco.webp",
+const techSkills = [
+  { name: "React", icon: "/images/react2.webp", category: "Frontend" },
+  { name: "Next.js", icon: "/images/next2.webp", category: "Fullstack" },
+  { name: "TypeScript", icon: "/images/typescript.webp", category: "Language" },
+  { name: "JavaScript", icon: "/images/javascript.webp", category: "Language" },
+  { name: "Node.js", icon: "/images/node2.webp", category: "Backend" },
+  { name: "Express", icon: "/images/express.webp", category: "Backend" },
+  { name: "MongoDB", icon: "/images/mongo.webp", category: "Database" },
+  { name: "MySQL", icon: "/images/mysql.webp", category: "Database" },
+  { name: "Figma", icon: "/images/figma.webp", category: "UI/UX" },
+  { name: "Adobe XD", icon: "/images/xd.webp", category: "UI/UX" },
+  { name: "Photoshop", icon: "/images/photoshop.webp", category: "Design" },
+  { name: "Illustrator", icon: "/images/illustrator.webp", category: "Vector" },
+  { name: "Premiere Pro", icon: "/images/premierepro.webp", category: "Motion" },
+  { name: "InDesign", icon: "/images/indesign.webp", category: "Publishing" },
+  { name: "Procreate", icon: "/images/procreate.webp", category: "Illustration" },
+  { name: "Canva", icon: "/images/canva.webp", category: "Design" },
+  { name: "Adobe Fresco", icon: "/images/fresco.webp", category: "Painting" },
 ];
-const textures = imageUrls.map((url) => textureLoader.load(url));
 
+const textureLoader = new THREE.TextureLoader();
+const textures = techSkills.map((s) => textureLoader.load(s.icon));
 const sphereGeometry = new THREE.SphereGeometry(1, 28, 28);
 
 const spheres = [...Array(30)].map(() => ({
@@ -79,7 +80,7 @@ function SphereGeo({
     if (api.current) {
       api.current.applyImpulse({
         x: (Math.random() - 0.5) * 100,
-        y: Math.random() * 100 + 50, // jump up
+        y: Math.random() * 100 + 50,
         z: (Math.random() - 0.5) * 100
       }, true);
       
@@ -112,21 +113,20 @@ function SphereGeo({
         scale={scale}
         geometry={sphereGeometry}
         material={material}
-        rotation={[0.3, 1, 1]}
         onPointerDown={handlePointerDown}
       />
     </RigidBody>
   );
 }
 
-type PointerProps = {
+function Pointer({
+  vec = new THREE.Vector3(),
+  isActive,
+}: {
   vec?: THREE.Vector3;
   isActive: boolean;
-};
-
-function Pointer({ vec = new THREE.Vector3(), isActive }: PointerProps) {
-  const ref = useRef<RapierRigidBody>(null);
-
+}) {
+  const ref = useRef<RapierRigidBody | null>(null);
   useFrame(({ pointer, viewport }) => {
     if (!isActive) return;
     const targetVec = vec.lerp(
@@ -139,7 +139,6 @@ function Pointer({ vec = new THREE.Vector3(), isActive }: PointerProps) {
     );
     ref.current?.setNextKinematicTranslation(targetVec);
   });
-
   return (
     <RigidBody
       position={[100, 100, 100]}
@@ -154,31 +153,30 @@ function Pointer({ vec = new THREE.Vector3(), isActive }: PointerProps) {
 
 const TechStack = () => {
   const [isActive, setIsActive] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(true);
+
+  useEffect(() => {
+    const checkViewport = () => {
+      setIsDesktop(window.innerWidth > 1024);
+    };
+    checkViewport();
+    window.addEventListener("resize", checkViewport);
+    return () => window.removeEventListener("resize", checkViewport);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY || document.documentElement.scrollTop;
-      const threshold = document
-        .getElementById("work")!
-        .getBoundingClientRect().top;
-      setIsActive(scrollY > threshold);
+      const el = document.getElementById("work");
+      if (el) {
+        const threshold = el.getBoundingClientRect().top;
+        setIsActive(scrollY > threshold);
+      }
     };
-    document.querySelectorAll(".header a").forEach((elem) => {
-      const element = elem as HTMLAnchorElement;
-      element.addEventListener("click", () => {
-        const interval = setInterval(() => {
-          handleScroll();
-        }, 10);
-        setTimeout(() => {
-          clearInterval(interval);
-        }, 1000);
-      });
-    });
     window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   const materials = useMemo(() => {
     return textures.map(
       (texture) =>
@@ -193,56 +191,83 @@ const TechStack = () => {
     );
   }, []);
 
-  return (
-    <div className="techstack">
-      <h2> My Techstack</h2>
+  const row1 = techSkills.slice(0, 9);
+  const row2 = techSkills.slice(9);
 
-      <Canvas
-        shadows
-        gl={{ alpha: true, stencil: false, depth: false, antialias: false, powerPreference: "high-performance" }}
-        camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
-        dpr={[1, 1.5]}
-        performance={{ min: 0.5 }}
-        onCreated={(state) => (state.gl.toneMappingExposure = 1.0)}
-        className="tech-canvas"
-      >
-        <ambientLight intensity={1} />
-        <spotLight
-          position={[20, 20, 25]}
-          penumbra={1}
-          angle={0.2}
-          color="white"
-          castShadow
-          shadow-mapSize={[512, 512]}
-        />
-        <directionalLight position={[0, 5, -4]} intensity={2} />
-        <Physics gravity={[0, 0, 0]}>
-          <Pointer isActive={isActive} />
-          {spheres.map((props, i) => (
-            <SphereGeo
-              key={i}
-              {...props}
-              material={materials[Math.floor(Math.random() * materials.length)]}
-              isActive={isActive}
-            />
-          ))}
-        </Physics>
-        <Environment
-          files="/models/char_enviorment.hdr"
-          environmentIntensity={0.5}
-          environmentRotation={[0, 4, 2]}
-        />
-        <EffectComposer enableNormalPass={false}>
-          <N8AO color="#0f002c" aoRadius={2} intensity={1.15} />
-          <Bloom luminanceThreshold={0.5} mipmapBlur intensity={0.5} />
-          <ChromaticAberration 
-            blendFunction={BlendFunction.NORMAL} 
-            offset={new THREE.Vector2(0.001, 0.001)} 
-            radialModulation={false}
-            modulationOffset={0}
+  return (
+    <div className="techstack" id="techstack">
+      <h2>My Techstack</h2>
+
+      {isDesktop ? (
+        <Canvas
+          shadows
+          gl={{ alpha: true, stencil: false, depth: false, antialias: false, powerPreference: "high-performance" }}
+          camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
+          dpr={[1, 1.5]}
+          performance={{ min: 0.5 }}
+          onCreated={(state) => (state.gl.toneMappingExposure = 1.0)}
+          className="tech-canvas"
+        >
+          <ambientLight intensity={1} />
+          <spotLight
+            position={[20, 20, 25]}
+            penumbra={1}
+            angle={0.2}
+            color="white"
+            castShadow
+            shadow-mapSize={[512, 512]}
           />
-        </EffectComposer>
-      </Canvas>
+          <directionalLight position={[0, 5, -4]} intensity={2} />
+          <Physics gravity={[0, 0, 0]}>
+            <Pointer isActive={isActive} />
+            {spheres.map((props, i) => (
+              <SphereGeo
+                key={i}
+                {...props}
+                material={materials[Math.floor(Math.random() * materials.length)]}
+                isActive={isActive}
+              />
+            ))}
+          </Physics>
+          <Environment
+            files="/models/char_enviorment.hdr"
+            environmentIntensity={0.5}
+            environmentRotation={[0, 4, 2]}
+          />
+          <EffectComposer enableNormalPass={false}>
+            <N8AO color="#0f002c" aoRadius={2} intensity={1.15} />
+            <Bloom luminanceThreshold={0.5} mipmapBlur intensity={0.5} />
+            <ChromaticAberration 
+              blendFunction={BlendFunction.NORMAL} 
+              offset={new THREE.Vector2(0.001, 0.001)} 
+              radialModulation={false}
+              modulationOffset={0}
+            />
+          </EffectComposer>
+        </Canvas>
+      ) : (
+        <div className="tech-mobile-container">
+          <p className="tech-mobile-subtitle">Technologies, frameworks, and design tools I work with daily</p>
+          <div className="tech-marquee-wrapper">
+            <Marquee speed={35} gradient={false} pauseOnHover={true} className="tech-marquee">
+              {row1.map((tech, idx) => (
+                <div key={idx} className="tech-mobile-card">
+                  <img src={tech.icon} alt={tech.name} className="tech-mobile-icon" loading="lazy" />
+                  <span className="tech-mobile-name">{tech.name}</span>
+                </div>
+              ))}
+            </Marquee>
+            <Marquee speed={30} direction="right" gradient={false} pauseOnHover={true} className="tech-marquee">
+              {row2.map((tech, idx) => (
+                <div key={idx} className="tech-mobile-card">
+                  <img src={tech.icon} alt={tech.name} className="tech-mobile-icon" loading="lazy" />
+                  <span className="tech-mobile-name">{tech.name}</span>
+                </div>
+              ))}
+            </Marquee>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
