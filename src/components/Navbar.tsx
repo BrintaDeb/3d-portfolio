@@ -27,12 +27,17 @@ const Navbar = () => {
     links.forEach((elem) => {
       const element = elem as HTMLAnchorElement;
       element.addEventListener("click", (e) => {
-        if (window.innerWidth > 1024) {
-          const elem = e.currentTarget as HTMLAnchorElement;
-          const section = elem.getAttribute("data-href");
-          if (section) {
-            e.preventDefault();
+        const elem = e.currentTarget as HTMLAnchorElement;
+        const section = elem.getAttribute("data-href");
+        if (section) {
+          e.preventDefault();
+          if (window.innerWidth > 1024 && smoother) {
             smoother.scrollTo(section, true, "top top");
+          } else {
+            const targetEl = document.querySelector(section);
+            if (targetEl) {
+              targetEl.scrollIntoView({ behavior: "smooth" });
+            }
           }
         }
       });

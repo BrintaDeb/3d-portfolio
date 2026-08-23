@@ -121,35 +121,6 @@ const Work = () => {
             start: "top 85%",
             toggleActions: "play none none reverse"
           }
-        }
-      );
-    }
-  }, []);
-
-  const goToSlide = useCallback((index: number) => {
-    setCurrentIndex(index);
-  }, []);
-
-  return (
-    <div className="work-section" id="work">
-      <div className="work-container section-container">
-        <h2 ref={titleRef}>
-          My <span>Work</span>
-        </h2>
-          
-          <div className="carousel-layout" ref={carouselRef}>
-            <div className="carousel-track-container">
-              <div
-                className="carousel-track"
-                style={{
-                  transform: `translateX(-${currentIndex * 100}%)`,
-                }}
-              >
-                {dynamicProjects.map((project, index) => (
-                  <div className="carousel-slide" key={index}>
-                    <div className="carousel-content">
-                      <Tilt
-                        tiltMaxAngleX={5}
                         tiltMaxAngleY={5}
                         perspective={1000}
                         transitionSpeed={1000}
