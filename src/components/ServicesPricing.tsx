@@ -228,29 +228,41 @@ const serviceCategories: ServiceCategory[] = [
 const ServicesPricing = () => {
   const [activeTab, setActiveTab] = useState<string>(serviceCategories[0].id);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<string | null>(null);
+  const [budgetVal, setBudgetVal] = useState("");
+  const [notesVal, setNotesVal] = useState("");
+  const [isDesktop, setIsDesktop] = useState(true);
   
   const sectionRef = useRef<HTMLDivElement>(null);
+  const briefSectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const checkViewport = () => {
+      setIsDesktop(window.innerWidth > 1024);
+    };
+    checkViewport();
+    window.addEventListener("resize", checkViewport);
+    return () => window.removeEventListener("resize", checkViewport);
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Animate pricing cards stagger
       gsap.fromTo(".pricing-card-tilt", 
-        { y: 50, opacity: 0 }, 
+        { y: 30, opacity: 0 }, 
         { 
-          y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out",
+          y: 0, opacity: 1, duration: 0.6, stagger: 0.08, ease: "power3.out",
           scrollTrigger: {
             trigger: ".pricing-grid",
-            start: "top 80%",
+            start: "top 85%",
             toggleActions: "play none none reverse"
           }
         }
       );
 
-      // Animate brief section
       gsap.fromTo(".customer-brief-section", 
-        { y: 50, opacity: 0 }, 
+        { y: 30, opacity: 0 }, 
         { 
-          y: 0, opacity: 1, duration: 0.8, ease: "power3.out",
+          y: 0, opacity: 1, duration: 0.6, ease: "power3.out",
           scrollTrigger: {
             trigger: ".customer-brief-section",
             start: "top 85%",
@@ -265,9 +277,18 @@ const ServicesPricing = () => {
 
   const activeCategory = serviceCategories.find(cat => cat.id === activeTab);
 
+  const handleSelectTier = (tier: PricingTier) => {
+    setBudgetVal(tier.price);
+    setNotesVal(`I am interested in the ${tier.name} tier (${tier.price}) for ${activeCategory?.title}.`);
+    if (briefSectionRef.current) {
+      briefSectionRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const handleQuoteSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitStatus(null);
     
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
@@ -284,10 +305,12 @@ const ServicesPricing = () => {
           projectType: "Custom Project Brief" 
         })
       });
-      alert("Brief submitted successfully! I'll get back to you soon.");
+      setSubmitStatus("Brief submitted successfully! I'll get back to you soon.");
+      setBudgetVal("");
+      setNotesVal("");
       e.currentTarget.reset();
     } catch (error) {
-      alert("Error submitting brief, please try again.");
+      setSubmitStatus("Error submitting brief. Please try again or reach out via email.");
     } finally {
       setIsSubmitting(false);
     }
@@ -296,10 +319,10 @@ const ServicesPricing = () => {
   return (
     <div className="pricing-section" id="services" ref={sectionRef}>
       <div className="pricing-container">
-        <h3 className="title" data-scroll data-scroll-speed="1">Services & Pricing</h3>
-        <div className="services-brief" data-scroll data-scroll-speed="1.2">
+        <h3 className="title">Services & Pricing</h3>
+        <div className="services-brief">
           <p>
-            I offer a range of specialized services tailored to meet your unique needs. Whether you're an individual, a startup, or an enterprise, we can work together to find the perfect solution. The pricing listed below provides approximate budget rates and can be adjusted based on your specific requirements.
+            Specialized digital design and engineering services tailored to your goals. Choose a structured package below or request a customized project brief.
           </p>
         </div>
         
@@ -322,14 +345,15 @@ const ServicesPricing = () => {
             <Tilt 
               key={index} 
               className="pricing-card-tilt"
-              tiltMaxAngleX={10} 
-              tiltMaxAngleY={10} 
+              tiltEnable={isDesktop}
+              tiltMaxAngleX={8} 
+              tiltMaxAngleY={8} 
               perspective={1000} 
-              transitionSpeed={1000} 
+              transitionSpeed={800} 
               scale={1.02} 
-              gyroscope={true}
-              glareEnable={true} 
-              glareMaxOpacity={0.15} 
+              gyroscope={false}
+              glareEnable={isDesktop} 
+              glareMaxOpacity={0.12} 
               glarePosition="all"
             >
               <div className={`pricing-card ${tier.isPopular ? "popular" : ""}`}>
@@ -360,14 +384,19 @@ const ServicesPricing = () => {
                   </ul>
                 </div>
 
-                <button className="select-plan-btn">Choose {tier.name}</button>
+                <button 
+                  className="select-plan-btn"
+                  onClick={() => handleSelectTier(tier)}
+                >
+                  Choose {tier.name}
+                </button>
               </div>
             </Tilt>
           ))}
         </div>
         
         {/* Customer Brief Section */}
-        <div className="customer-brief-section">
+        <div className="customer-brief-section" ref={briefSectionRef}>
           <div className="brief-content-wrapper">
             <div className="hourly-content">
               <h4>Submit a Project Brief</h4>
@@ -382,12 +411,33 @@ const ServicesPricing = () => {
           </div>
 
           <form className="brief-form" onSubmit={handleQuoteSubmit}>
+            {submitStatus && (
+              <div className={`form-feedback ${submitStatus.includes('Error') ? 'error' : 'success'}`}>
+                {submitStatus}
+              </div>
+            )}
             <div className="brief-input-group">
               <input type="text" name="name" placeholder="Your Name" required className="brief-input" />
               <input type="email" name="email" placeholder="Your Email" required className="brief-input" />
             </div>
-            <input type="text" name="budget" placeholder="Estimated Budget (e.g., ₹25,000)" required className="brief-input" />
-            <textarea name="notes" placeholder="Tell me about your project..." rows={4} required className="brief-input textarea"></textarea>
+            <input 
+              type="text" 
+              name="budget" 
+              placeholder="Estimated Budget (e.g., ₹25,000)" 
+              required 
+              value={budgetVal}
+              onChange={(e) => setBudgetVal(e.target.value)}
+              className="brief-input" 
+            />
+            <textarea 
+              name="notes" 
+              placeholder="Tell me about your project..." 
+              rows={4} 
+              required 
+              value={notesVal}
+              onChange={(e) => setNotesVal(e.target.value)}
+              className="brief-input textarea"
+            ></textarea>
             <button type="submit" className="contact-submit" disabled={isSubmitting}>
               {isSubmitting ? "Sending..." : "Request Custom Quote"}
             </button>

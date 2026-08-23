@@ -1,59 +1,64 @@
 .pricing-section {
   width: 100%;
-  padding: 100px 0;
+  padding: 80px 0;
   display: flex;
   justify-content: center;
   color: #fff;
+  position: relative;
+  z-index: 2;
 }
 
 .pricing-container {
-  width: 90%;
-  max-width: 1200px;
+  width: var(--cWidth);
+  max-width: var(--cMaxWidth);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .pricing-section .title {
-  font-size: 3rem;
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   text-transform: uppercase;
   letter-spacing: 2px;
   text-align: center;
 }
 
 .services-brief {
-  max-width: 800px;
+  max-width: 750px;
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 35px;
   color: #aaa;
-  font-size: 1.1rem;
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
   line-height: 1.6;
+  padding: 0 10px;
 }
 
 /* Tabs */
 .pricing-tabs {
   display: flex;
-  gap: 15px;
+  gap: 10px;
   background: rgba(255, 255, 255, 0.05);
-  padding: 10px;
+  padding: 8px;
   border-radius: 50px;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
   flex-wrap: wrap;
   justify-content: center;
+  max-width: 100%;
 }
 
 .pricing-tab {
   background: transparent;
   border: none;
   color: #aaa;
-  padding: 12px 24px;
+  padding: 10px 20px;
   border-radius: 30px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .pricing-tab:hover {
@@ -63,7 +68,7 @@
 .pricing-tab.active {
   background: var(--accentColor, #22d3ee);
   color: #000;
-  box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+  box-shadow: 0 0 20px rgba(94, 234, 212, 0.3);
 }
 
 /* Pricing Grid */
@@ -74,25 +79,30 @@
   width: 100%;
 }
 
+.pricing-card-tilt {
+  height: 100%;
+}
+
 /* Pricing Card */
 .pricing-card {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
-  padding: 30px 20px;
+  padding: 28px 20px;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
   position: relative;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.3s ease;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 }
 
 .pricing-card:hover {
-  transform: translateY(-10px) scale(1.02);
   border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   background: rgba(255, 255, 255, 0.05);
 }
 
@@ -103,30 +113,31 @@
 
 .popular-badge {
   position: absolute;
-  top: -15px;
+  top: -14px;
   left: 50%;
   transform: translateX(-50%);
   background: var(--accentColor, #22d3ee);
   color: #000;
-  padding: 6px 16px;
+  padding: 4px 14px;
   border-radius: 20px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
+  white-space: nowrap;
 }
 
 /* Header & Price */
 .pricing-header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding-bottom: 20px;
-  margin-bottom: 20px;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
 }
 
 .tier-name {
-  font-size: 1.5rem;
-  font-weight: 500;
-  margin: 0 0 15px 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0 0 12px 0;
   color: #fff;
 }
 
@@ -134,19 +145,20 @@
   display: flex;
   align-items: baseline;
   gap: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 
 .fixed-price {
-  font-size: 3rem;
+  font-size: clamp(2rem, 3.5vw, 2.6rem);
   font-weight: 700;
   color: #fff;
+  line-height: 1.1;
 }
 
 .hourly-rate {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #888;
-  margin: 0 0 15px 0;
+  margin: 0 0 12px 0;
 }
 
 .hourly-rate strong {
@@ -155,68 +167,76 @@
 }
 
 .tier-desc {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: #aaa;
-  line-height: 1.5;
+  line-height: 1.45;
   margin: 0;
-  min-height: 45px;
+  min-height: 40px;
 }
 
 /* Meta Data */
 .pricing-meta {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 25px;
-  font-size: 0.9rem;
+  margin-bottom: 20px;
+  font-size: 0.85rem;
   color: #ddd;
   font-weight: 500;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 /* Features */
 .pricing-features {
   flex-grow: 1;
+  margin-bottom: 20px;
 }
 
 .pricing-features h5 {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  margin: 0 0 15px 0;
+  margin: 0 0 12px 0;
   color: #fff;
 }
 
 .pricing-features ul {
   list-style: none;
   padding: 0;
-  margin: 0 0 30px 0;
+  margin: 0;
 }
 
 .pricing-features li {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  align-items: flex-start;
+  gap: 10px;
   color: #aaa;
-  margin-bottom: 15px;
-  font-size: 0.95rem;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  line-height: 1.4;
 }
 
 .check-icon {
   color: var(--accentColor, #22d3ee);
   flex-shrink: 0;
+  margin-top: 3px;
 }
 
 /* CTA Button */
 .select-plan-btn {
   width: 100%;
-  padding: 15px;
+  padding: 13px;
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   background: transparent;
   color: #fff;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: auto;
+  min-height: 44px;
 }
 
 .select-plan-btn:hover {
@@ -232,76 +252,60 @@
 
 .pricing-card.popular .select-plan-btn:hover {
   background: #fff;
+  color: #000;
 }
 
 /* Customer Brief Section */
 .customer-brief-section {
   width: 100%;
-  margin-top: 60px;
+  margin-top: 50px;
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 24px;
-  padding: 50px;
+  padding: 40px;
   display: grid;
   grid-template-columns: 1fr 1.2fr;
-  gap: 50px;
+  gap: 40px;
   align-items: center;
   position: relative;
   overflow: hidden;
-}
-
-.customer-brief-section > * {
-  position: relative;
-  z-index: 1;
+  box-sizing: border-box;
 }
 
 .customer-brief-section .brief-content-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 25px;
 }
 
 .hourly-content h4 {
-  font-size: 2.8rem;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
   font-weight: 700;
-  margin: 0 0 15px 0;
+  margin: 0 0 12px 0;
   background: linear-gradient(90deg, #ffffff, #a5b4fc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 .hourly-content p {
   color: rgba(255, 255, 255, 0.7);
   margin: 0;
-  font-size: 1.15rem;
-  line-height: 1.6;
-  max-width: 480px;
+  font-size: 1rem;
+  line-height: 1.5;
+  max-width: 440px;
 }
 
 .brief-question-mark {
-  width: 80px;
-  height: 80px;
-  border-radius: 20px;
+  width: 65px;
+  height: 65px;
+  border-radius: 16px;
   background: rgba(34, 211, 238, 0.1);
   border: 1px solid rgba(34, 211, 238, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-}
-
-.brief-question-mark::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: var(--accentColor, #22d3ee);
-  filter: blur(30px);
-  opacity: 0.2;
-  z-index: 0;
-  border-radius: inherit;
 }
 
 .glowing-icon-wrapper {
@@ -312,10 +316,9 @@
 }
 
 .glowing-question {
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: var(--accentColor, #22d3ee);
   filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.5));
-  z-index: 1;
 }
 
 @keyframes float-pulse {
@@ -323,41 +326,56 @@
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-8px);
+    transform: translateY(-6px);
   }
 }
 
 .brief-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  background: rgba(0, 0, 0, 0.25);
-  padding: 40px;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: inset 0 2px 20px rgba(0, 0, 0, 0.2);
+  gap: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 30px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.form-feedback {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.form-feedback.success {
+  background: rgba(94, 234, 212, 0.15);
+  border: 1px solid var(--accentColor);
+  color: var(--accentColor);
+}
+
+.form-feedback.error {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid #ef4444;
+  color: #fca5a5;
 }
 
 .brief-input-group {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   width: 100%;
-}
-
-.brief-input-group .brief-input {
-  flex: 1;
-  min-width: 0; /* Prevents flex items from overflowing */
 }
 
 .brief-input {
   width: 100%;
-  padding: 14px 18px;
+  padding: 12px 16px;
   border-radius: 8px;
   border: 1px solid rgba(150, 150, 150, 0.3);
   background: transparent;
   color: #fff;
-  font-family: inherit;
   font-size: 16px;
+  box-sizing: border-box;
+  outline: none;
   transition: border-color 0.3s;
 }
 
@@ -366,19 +384,18 @@
 }
 
 .brief-input:focus {
-  outline: none;
   border-color: var(--accentColor, #22d3ee);
 }
 
 .brief-input.textarea {
   resize: vertical;
-  min-height: 120px;
+  min-height: 100px;
 }
 
 .brief-form .contact-submit {
-  margin-top: 10px;
+  margin-top: 5px;
   width: 100%;
-  padding: 15px;
+  padding: 14px;
   border-radius: 8px;
   background: var(--accentColor, #22d3ee);
   color: #000;
@@ -387,6 +404,7 @@
   border: none;
   cursor: pointer;
   transition: transform 0.2s, filter 0.3s;
+  min-height: 48px;
 }
 
 .brief-form .contact-submit:hover:not(:disabled) {
@@ -394,18 +412,13 @@
   filter: brightness(1.1);
 }
 
-.brief-form .contact-submit:active:not(:disabled) {
-  transform: translateY(0);
-}
-
 .brief-form .contact-submit:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none;
-  box-shadow: none;
 }
 
-/* Responsive updates for pricing & brief section */
+/* Responsive Media Queries */
 @media screen and (max-width: 1200px) {
   .pricing-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -415,13 +428,13 @@
 
 @media screen and (max-width: 900px) {
   .pricing-section {
-    padding: 60px 0;
+    padding: 50px 0;
   }
 
   .customer-brief-section {
     grid-template-columns: 1fr;
-    padding: 35px 24px;
-    gap: 30px;
+    padding: 28px 20px;
+    gap: 25px;
   }
   
   .brief-content-wrapper {
@@ -432,7 +445,7 @@
 
 @media screen and (max-width: 768px) {
   .pricing-section {
-    padding: 40px 0;
+    padding: 35px 0;
   }
 
   .pricing-container {
@@ -441,58 +454,42 @@
 
   .pricing-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  
-  .pricing-section .title {
-    font-size: clamp(1.8rem, 6vw, 2.5rem);
-    margin-bottom: 15px;
+    gap: 16px;
   }
 
   .pricing-tabs {
-    gap: 8px;
+    gap: 6px;
     padding: 6px;
-    border-radius: 20px;
-    margin-bottom: 30px;
-    width: 100%;
-    box-sizing: border-box;
+    margin-bottom: 24px;
   }
 
   .pricing-tab {
     padding: 8px 14px;
     font-size: 0.85rem;
   }
-  
-  .fixed-price {
-    font-size: 2.2rem;
-  }
 
   .brief-input-group {
     flex-direction: column;
     gap: 12px;
   }
-  
-  .hourly-content h4 {
-    font-size: 1.8rem;
-  }
 
-  .hourly-content p {
-    font-size: 1rem;
+  .brief-form {
+    padding: 20px 16px;
   }
 }
 
 @media screen and (max-width: 480px) {
-  .customer-brief-section {
-    padding: 24px 16px;
-    border-radius: 16px;
+  .pricing-card {
+    padding: 22px 16px;
   }
-  
-  .brief-form {
-    padding: 20px 16px;
+
+  .customer-brief-section {
+    padding: 20px 14px;
     border-radius: 16px;
   }
 
-  .pricing-card {
-    padding: 24px 16px;
+  .brief-form {
+    padding: 16px 12px;
+    border-radius: 14px;
   }
 }
