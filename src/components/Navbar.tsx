@@ -9,7 +9,18 @@ gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
 export let smoother: ScrollSmoother;
 
 const Navbar = () => {
-  const [theme, setTheme] = useState<string>("dark");
+  const [theme, setTheme] = useState<string>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("portfolio_theme");
+      if (saved) return saved;
+      return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+    }
+    return "dark";
+  });
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
 
   useEffect(() => {
     smoother = ScrollSmoother.create({
@@ -60,6 +71,7 @@ const Navbar = () => {
   const toggleTheme = () => {
     const nextTheme = theme === "light" ? "dark" : "light";
     document.documentElement.dataset.theme = nextTheme;
+    localStorage.setItem("portfolio_theme", nextTheme);
     setTheme(nextTheme);
   };
 
@@ -70,7 +82,7 @@ const Navbar = () => {
           BD
         </a>
         <a
-          href="https://www.linkedin.com/in/brinta-deb-413656220"
+          href="https://www.linkedin.com/in/brinta-deb-413656220/"
           className="navbar-connect"
           data-cursor="disable"
           target="_blank"
@@ -104,8 +116,8 @@ const Navbar = () => {
               onClick={toggleTheme}
               className="navbar-theme-btn"
               data-cursor="disable"
-              title="Toggle Theme"
-              aria-label="Toggle Theme"
+              title={`Switch to ${theme === "light" ? "Dark" : "Light"} mode`}
+              aria-label={`Switch to ${theme === "light" ? "Dark" : "Light"} mode`}
             >
               {theme === "light" ? "🌙" : "☀️"}
             </button>

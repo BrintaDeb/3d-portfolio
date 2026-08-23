@@ -11,12 +11,12 @@
   transform: translateX(-50%);
   top: 10px;
   z-index: 9999;
-  background: rgba(5, 8, 16, 0.8);
+  background: var(--headerBg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--headerBorder);
   border-radius: 40px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--cardShadow);
 }
 
 .header ul {
@@ -41,8 +41,8 @@
 }
 
 .navbar-theme-btn {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: var(--surfaceColor);
+  border: 1px solid var(--surfaceBorder);
   border-radius: 50%;
   width: 32px;
   height: 32px;
@@ -53,13 +53,13 @@
   cursor: pointer;
   padding: 0;
   margin-left: 4px;
-  color: #fff;
+  color: var(--textColor);
   transition: all 0.2s ease;
   flex-shrink: 0;
 }
 
 .navbar-theme-btn:hover {
-  background: rgba(94, 234, 212, 0.2);
+  background: var(--surfaceColorHover);
   border-color: var(--accentColor);
   transform: scale(1.05);
 }

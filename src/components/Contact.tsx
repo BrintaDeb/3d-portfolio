@@ -94,7 +94,7 @@ const Contact = () => {
                   GitHub <MdArrowOutward />
                 </a>
                 <a
-                  href="https://www.linkedin.com/in/brinta-deb-413656220"
+                  href="https://www.linkedin.com/in/brinta-deb-413656220/"
                   target="_blank"
                   rel="noreferrer"
                   data-cursor="disable"
@@ -103,13 +103,22 @@ const Contact = () => {
                   LinkedIn <MdArrowOutward />
                 </a>
                 <a
-                  href="https://www.instagram.com/"
+                  href="https://www.instagram.com/atelierstudios.svg?utm_source=qr&igsi=cDIyeHJxcml5czdu"
                   target="_blank"
                   rel="noreferrer"
                   data-cursor="disable"
                   className="contact-social"
                 >
                   Instagram <MdArrowOutward />
+                </a>
+                <a
+                  href="https://www.youtube.com/@kingsbreed8381"
+                  target="_blank"
+                  rel="noreferrer"
+                  data-cursor="disable"
+                  className="contact-social"
+                >
+                  YouTube <MdArrowOutward />
                 </a>
               </div>
             </div>

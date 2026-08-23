@@ -70,7 +70,7 @@ const SocialIcons = () => {
         </span>
         <span>
           <a
-            href="https://www.linkedin.com/in/brinta-deb-413656220"
+            href="https://www.linkedin.com/in/brinta-deb-413656220/"
             target="_blank"
             rel="noreferrer"
           >
@@ -79,7 +79,7 @@ const SocialIcons = () => {
         </span>
         <span>
           <a
-            href="#"
+            href="https://www.youtube.com/@kingsbreed8381"
             target="_blank"
             rel="noreferrer"
           >
@@ -88,7 +88,7 @@ const SocialIcons = () => {
         </span>
         <span>
           <a
-            href="#"
+            href="https://www.instagram.com/atelierstudios.svg?utm_source=qr&igsi=cDIyeHJxcml5czdu"
             target="_blank"
             rel="noreferrer"
           >

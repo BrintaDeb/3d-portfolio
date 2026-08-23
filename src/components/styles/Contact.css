@@ -22,6 +22,7 @@
   margin: 0;
   margin-bottom: 35px;
   letter-spacing: 1px;
+  color: var(--textColor);
 }
 
 .contact-flex {
@@ -30,6 +31,8 @@
   gap: 40px;
   width: 100%;
   box-sizing: border-box;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .contact-left {
@@ -52,22 +55,22 @@
   font-size: 1.1rem;
   font-weight: 600;
   margin: 0 0 10px 0;
-  color: var(--accentColor, #22d3ee);
+  color: var(--accentColor);
   letter-spacing: 1px;
   text-transform: uppercase;
 }
 
 .contact-left p {
   margin: 0 0 16px 0;
-  color: #bbb;
+  color: var(--textSecondary);
   font-size: 1rem;
   line-height: 1.6;
 }
 
 .contact-email-link {
   font-size: 1.2rem;
-  color: #fff;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--textColor);
+  border-bottom: 1px solid var(--surfaceBorder);
   padding-bottom: 2px;
   transition: all 0.3s ease;
 }
@@ -94,9 +97,9 @@ a.contact-social {
   gap: 6px;
   font-size: 0.95rem;
   font-weight: 500;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--textColor);
+  background: var(--surfaceColor);
+  border: 1px solid var(--surfaceBorder);
   padding: 8px 16px;
   border-radius: 20px;
   transition: all 0.3s ease;
@@ -105,7 +108,7 @@ a.contact-social {
 }
 
 a.contact-social:hover {
-  background: rgba(94, 234, 212, 0.15);
+  background: var(--surfaceColorHover);
   border-color: var(--accentColor);
   color: var(--accentColor);
   transform: translateY(-2px);
@@ -113,11 +116,11 @@ a.contact-social:hover {
 
 /* Contact Form Styling */
 .contact-form-wrapper {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--surfaceColor);
+  border: 1px solid var(--surfaceBorder);
   border-radius: 20px;
   padding: 32px 28px;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  box-shadow: var(--cardShadow);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-sizing: border-box;
@@ -127,7 +130,7 @@ a.contact-social:hover {
   font-size: 1.3rem;
   font-weight: 600;
   margin: 0 0 16px 0;
-  color: #fff;
+  color: var(--textColor);
 }
 
 .contact-feedback {
@@ -140,7 +143,7 @@ a.contact-social:hover {
 }
 
 .contact-feedback.success {
-  background: rgba(94, 234, 212, 0.15);
+  background: var(--accentGlow);
   border: 1px solid var(--accentColor);
   color: var(--accentColor);
 }
@@ -148,7 +151,7 @@ a.contact-social:hover {
 .contact-feedback.error {
   background: rgba(239, 68, 68, 0.15);
   border: 1px solid #ef4444;
-  color: #fca5a5;
+  color: #ef4444;
 }
 
 .contact-form {
@@ -161,8 +164,8 @@ a.contact-social:hover {
   width: 100%;
   padding: 13px 16px;
   border-radius: 8px;
-  border: 1px solid rgba(150, 150, 150, 0.3);
-  background: transparent;
+  border: 1px solid var(--inputBorder);
+  background: var(--inputBg);
   color: var(--textColor);
   font-size: 16px;
   outline: none;
@@ -171,7 +174,7 @@ a.contact-social:hover {
 }
 
 .contact-input::placeholder {
-  color: rgba(150, 150, 150, 0.6);
+  color: var(--textMuted);
 }
 
 .contact-input:focus {
@@ -188,13 +191,17 @@ a.contact-social:hover {
   border-radius: 8px;
   border: none;
   background: var(--accentColor);
-  color: #000;
+  color: #fff;
   cursor: pointer;
   font-weight: 600;
   font-size: 16px;
   transition: transform 0.2s, filter 0.3s;
   min-height: 48px;
   margin-top: 4px;
+}
+
+[data-theme="dark"] .contact-submit {
+  color: #000;
 }
 
 .contact-submit:hover:not(:disabled) {
@@ -214,7 +221,7 @@ a.contact-social:hover {
   justify-content: space-between;
   align-items: center;
   margin-top: 60px;
-  border-top: 1px solid rgba(150, 150, 150, 0.2);
+  border-top: 1px solid var(--surfaceBorder);
   padding-top: 30px;
   flex-wrap: wrap;
   gap: 16px;
@@ -224,7 +231,7 @@ a.contact-social:hover {
   font-weight: 400;
   font-size: clamp(14px, 2.5vw, 18px);
   margin: 0;
-  color: #aaa;
+  color: var(--textSecondary);
 }
 
 .contact-bottom-text h2 span {
@@ -239,7 +246,7 @@ a.contact-social:hover {
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #888;
+  color: var(--textMuted);
 }
 
 /* Media Queries for iPad & Mobile */
