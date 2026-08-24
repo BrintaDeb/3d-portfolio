@@ -1,10 +1,20 @@
 import { apiFetch } from "../api";
 import { useState, useEffect, useRef } from "react";
-import { FaCheck } from "react-icons/fa";
-import { BsQuestionLg } from "react-icons/bs";
+import { 
+  MdOutlineCode, 
+  MdOutlineDesignServices, 
+  MdOutlineBrush, 
+  MdOutlineAccessTime, 
+  MdOutlineAutorenew, 
+  MdOutlineArrowForward, 
+  MdOutlineCheckCircle, 
+  MdClose, 
+  MdSend 
+} from "react-icons/md";
 import Tilt from "react-parallax-tilt";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { smoother } from "./Navbar";
 import "./styles/ServicesPricing.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -25,6 +35,7 @@ interface PricingTier {
 interface ServiceCategory {
   id: string;
   title: string;
+  icon: React.ReactNode;
   tiers: PricingTier[];
 }
 
@@ -32,17 +43,19 @@ const serviceCategories: ServiceCategory[] = [
   {
     id: "web-dev",
     title: "Web Development",
+    icon: <MdOutlineCode className="tab-icon" />,
     tiers: [
       {
         name: "Basic",
         price: "~₹15,000",
         hourlyRate: "₹1,500/hr",
-        description: "A simple, responsive landing page to establish your online presence.",
+        description: "A sleek, responsive landing page to establish your online presence.",
         features: [
-          "1 Page Landing Site",
-          "Responsive Design",
-          "Basic SEO Optimization",
-          "Contact Form"
+          "1 Page Responsive Landing Site",
+          "Modern UI & Smooth Motion",
+          "SEO Best Practices Setup",
+          "Contact & Lead Capture Form",
+          "Mobile & Tablet Optimized"
         ],
         deliveryTime: "5 Days",
         revisions: "2 Revisions"
@@ -51,13 +64,13 @@ const serviceCategories: ServiceCategory[] = [
         name: "Standard",
         price: "~₹40,000",
         hourlyRate: "₹2,500/hr",
-        description: "A complete multi-page website tailored for small businesses.",
+        description: "A complete multi-page website tailored for growing businesses and startups.",
         features: [
-          "Up to 5 Pages",
-          "Responsive Design",
-          "CMS Integration",
-          "Advanced SEO",
-          "Social Media Integration"
+          "Up to 5 Custom Pages",
+          "Custom Micro-Interactions",
+          "CMS Integration & Dynamic Content",
+          "Advanced SEO & Performance Tuning",
+          "Social Media & Analytics Setup"
         ],
         deliveryTime: "14 Days",
         revisions: "5 Revisions",
@@ -67,13 +80,14 @@ const serviceCategories: ServiceCategory[] = [
         name: "Premium",
         price: "~₹90,000",
         hourlyRate: "₹3,500/hr",
-        description: "A fully custom web application or e-commerce solution.",
+        description: "A fully custom web application or interactive e-commerce solution.",
         features: [
           "Custom Web App / E-commerce",
-          "Database Integration",
-          "User Authentication",
-          "Payment Gateway setup",
-          "Priority Support"
+          "Database & API Architecture",
+          "Secure User Authentication",
+          "Payment Gateway Integration",
+          "Interactive 3D / WebGL Elements",
+          "Priority 30-Day Support"
         ],
         deliveryTime: "30+ Days",
         revisions: "Unlimited"
@@ -82,13 +96,14 @@ const serviceCategories: ServiceCategory[] = [
         name: "Enterprise",
         price: "~₹1,50,000+",
         hourlyRate: "₹5,000/hr",
-        description: "Scalable enterprise solutions with advanced architecture and dedicated support.",
+        description: "Scalable enterprise architecture with dedicated maintenance and custom workflows.",
         features: [
-          "Complex Enterprise Systems",
-          "Microservices Architecture",
-          "Advanced Cloud Deployment",
+          "Complex Enterprise Platform",
+          "Microservices & Cloud Scaling",
+          "Automated CI/CD Pipelines",
           "SLA & Dedicated Maintenance",
-          "24/7 Priority Support"
+          "Security Hardening & Audits",
+          "24/7 Dedicated Support"
         ],
         deliveryTime: "60+ Days",
         revisions: "Unlimited"
@@ -98,47 +113,50 @@ const serviceCategories: ServiceCategory[] = [
   {
     id: "ui-ux",
     title: "UI/UX Design",
+    icon: <MdOutlineDesignServices className="tab-icon" />,
     tiers: [
       {
         name: "Basic",
         price: "~₹10,000",
         hourlyRate: "₹1,000/hr",
-        description: "Wireframes and basic UI for a small app or website idea.",
+        description: "Wireframes and basic UI for a small application or product concept.",
         features: [
-          "Up to 3 Screens",
-          "Low-Fidelity Wireframes",
-          "Basic Style Guide",
+          "Up to 3 Key Screens",
+          "Low & High Fidelity Wireframes",
+          "Color Palette & Typography Guide",
+          "Figma Source File Included"
         ],
         deliveryTime: "4 Days",
-        revisions: "1 Revision"
+        revisions: "2 Revisions"
       },
       {
         name: "Standard",
         price: "~₹30,000",
         hourlyRate: "₹2,000/hr",
-        description: "High-fidelity designs with a comprehensive design system.",
+        description: "High-fidelity interface design with a comprehensive component library.",
         features: [
-          "Up to 10 Screens",
-          "High-Fidelity UI",
-          "Interactive Prototype",
-          "Full Design System",
-          "Assets Export"
+          "Up to 10 Custom Screens",
+          "High-Fidelity UI Design",
+          "Interactive Figma Prototype",
+          "Full Design System & Tokens",
+          "Developer-Ready Asset Export"
         ],
         deliveryTime: "10 Days",
-        revisions: "3 Revisions",
+        revisions: "4 Revisions",
         isPopular: true
       },
       {
         name: "Premium",
         price: "~₹60,000",
         hourlyRate: "₹3,000/hr",
-        description: "Complete product design from research to high-fidelity prototypes.",
+        description: "End-to-end product design from user research to interactive prototypes.",
         features: [
-          "Unlimited Screens (Fair Use)",
-          "UX Research & Persona",
-          "Advanced Micro-interactions",
-          "Developer Handoff",
-          "Post-launch Review"
+          "Complete Mobile/Web Experience",
+          "UX Research & User Journeys",
+          "Micro-Interactions & Animation Specs",
+          "Responsive Breakpoints (Desktop/Mobile)",
+          "Detailed Developer Handoff",
+          "Post-Launch Design QA"
         ],
         deliveryTime: "21 Days",
         revisions: "Unlimited"
@@ -147,13 +165,13 @@ const serviceCategories: ServiceCategory[] = [
         name: "Enterprise",
         price: "~₹1,00,000+",
         hourlyRate: "₹4,000/hr",
-        description: "Large-scale design systems and multi-platform UX strategy.",
+        description: "Large-scale design systems and multi-platform strategic UX architecture.",
         features: [
-          "Multi-Platform (Web & Mobile)",
+          "Multi-Platform (Web, iOS, Android)",
           "Comprehensive User Testing",
-          "Enterprise Design System",
-          "Dedicated UX Researcher",
-          "Continuous Optimization"
+          "Enterprise Design System & Governance",
+          "Design Strategy & Roadmap",
+          "Continuous Iteration & Optimization"
         ],
         deliveryTime: "45+ Days",
         revisions: "Unlimited"
@@ -163,46 +181,49 @@ const serviceCategories: ServiceCategory[] = [
   {
     id: "graphic-design",
     title: "Graphic Design",
+    icon: <MdOutlineBrush className="tab-icon" />,
     tiers: [
       {
         name: "Basic",
         price: "~₹8,000",
         hourlyRate: "₹800/hr",
-        description: "Simple illustrations, poster design, or basic color grading.",
+        description: "Promotional graphics, social media assets, and digital banners.",
         features: [
-          "Up to 2 Concepts",
-          "Basic Color Grading",
-          "Social Media Posters",
-          "High-Res Export"
+          "Up to 2 Creative Concepts",
+          "Social Media Kit (Posters/Stories)",
+          "Basic Color Grading & Retouching",
+          "High-Resolution Print/Web Export"
         ],
         deliveryTime: "3 Days",
-        revisions: "1 Revision"
+        revisions: "2 Revisions"
       },
       {
         name: "Standard",
         price: "~₹20,000",
         hourlyRate: "₹1,500/hr",
-        description: "Engaging promotional materials, custom illustrations, and branding.",
+        description: "Engaging promotional materials, bespoke illustrations, and identity essentials.",
         features: [
-          "Custom Illustrations",
-          "Advanced Color Grading",
-          "Brand Identity Basics",
-          "Source File Included"
+          "Custom Digital Illustrations",
+          "Brand Visual Identity Essentials",
+          "Marketing Collateral & Banners",
+          "Layered Vector Source Files",
+          "Commercial Usage License"
         ],
         deliveryTime: "7 Days",
-        revisions: "3 Revisions",
+        revisions: "4 Revisions",
         isPopular: true
       },
       {
         name: "Premium",
         price: "~₹50,000",
         hourlyRate: "₹2,500/hr",
-        description: "Complex vector illustrations, full brand identity, and commercial art.",
+        description: "Full brand identity suite, complex vector artwork, and creative campaign assets.",
         features: [
-          "Full Brand Identity",
-          "Vector & Digital Art",
-          "Commercial Rights",
-          "Print-Ready Files"
+          "Comprehensive Brand Guidelines",
+          "Custom Vector & 3D Artworks",
+          "Print-Ready Packaging & Merchandise",
+          "Social Media Brand Kit",
+          "Full Commercial Buyout Rights"
         ],
         deliveryTime: "14 Days",
         revisions: "Unlimited"
@@ -211,12 +232,13 @@ const serviceCategories: ServiceCategory[] = [
         name: "Enterprise",
         price: "~₹90,000+",
         hourlyRate: "₹3,500/hr",
-        description: "High-end campaign designs and large scale illustration projects.",
+        description: "High-end commercial art direction, omni-channel campaigns, and bespoke illustration.",
         features: [
-          "Campaign Art Direction",
-          "Large Scale Illustrations",
-          "Extensive Brand Guidelines",
-          "Full Buyout Rights"
+          "Campaign Art Direction & Strategy",
+          "Large Scale Visual Artwork",
+          "Multi-Platform Asset Ecosystem",
+          "Motion Graphics & Teaser Assets",
+          "Full Intellectual Property Transfer"
         ],
         deliveryTime: "30+ Days",
         revisions: "Unlimited"
@@ -225,12 +247,22 @@ const serviceCategories: ServiceCategory[] = [
   }
 ];
 
+interface SelectedPlan {
+  category: string;
+  tierName: string;
+  price: string;
+}
+
 const ServicesPricing = () => {
   const [activeTab, setActiveTab] = useState<string>(serviceCategories[0].id);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<string | null>(null);
+  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
+  const [nameVal, setNameVal] = useState("");
+  const [emailVal, setEmailVal] = useState("");
   const [budgetVal, setBudgetVal] = useState("");
   const [notesVal, setNotesVal] = useState("");
+  const [selectedPlan, setSelectedPlan] = useState<SelectedPlan | null>(null);
+  const [isHighlighted, setIsHighlighted] = useState(false);
   const [isDesktop, setIsDesktop] = useState(true);
   
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -245,16 +277,36 @@ const ServicesPricing = () => {
     return () => window.removeEventListener("resize", checkViewport);
   }, []);
 
-
-
   const activeCategory = serviceCategories.find(cat => cat.id === activeTab);
 
   const handleSelectTier = (tier: PricingTier) => {
+    const categoryTitle = activeCategory?.title || "Custom Service";
+    setSelectedPlan({
+      category: categoryTitle,
+      tierName: tier.name,
+      price: tier.price
+    });
     setBudgetVal(tier.price);
-    setNotesVal(`I am interested in the ${tier.name} tier (${tier.price}) for ${activeCategory?.title}.`);
-    if (briefSectionRef.current) {
-      briefSectionRef.current.scrollIntoView({ behavior: "smooth" });
-    }
+    setNotesVal(`Hi Shreyam, I am interested in the ${tier.name} Plan (${tier.price}) for ${categoryTitle}.\n\nProject details: `);
+    
+    // Highlight brief section
+    setIsHighlighted(true);
+    setTimeout(() => setIsHighlighted(false), 1800);
+
+    // Smooth scroll to brief section
+    setTimeout(() => {
+      if (window.innerWidth > 1024 && smoother) {
+        smoother.scrollTo(briefSectionRef.current, true, "center center");
+      } else if (briefSectionRef.current) {
+        briefSectionRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }, 60);
+  };
+
+  const handleClearSelectedPlan = () => {
+    setSelectedPlan(null);
+    setBudgetVal("");
+    setNotesVal("");
   };
 
   const handleQuoteSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -262,39 +314,46 @@ const ServicesPricing = () => {
     setIsSubmitting(true);
     setSubmitStatus(null);
     
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-    
     try {
       await apiFetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
-          name: data.name,
-          email: data.email,
-          budget: data.budget,
-          notes: data.notes,
-          projectType: "Custom Project Brief" 
+          name: nameVal,
+          email: emailVal,
+          budget: budgetVal,
+          notes: notesVal,
+          projectType: selectedPlan 
+            ? `${selectedPlan.category} - ${selectedPlan.tierName} Plan` 
+            : "Custom Project Brief" 
         })
       });
-      setSubmitStatus("Brief submitted successfully! I'll get back to you soon.");
+      setSubmitStatus("success");
+      setNameVal("");
+      setEmailVal("");
       setBudgetVal("");
       setNotesVal("");
-      e.currentTarget.reset();
+      setSelectedPlan(null);
     } catch (error) {
-      setSubmitStatus("Error submitting brief. Please try again or reach out via email.");
+      setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="pricing-section" id="services" ref={sectionRef}>
-      <div className="pricing-container">
-        <h3 className="title">Services & Pricing</h3>
-        <div className="services-brief">
-          <p>
-            Specialized digital design and engineering services tailored to your goals. Choose a structured package below or request a customized project brief.
+    <div className="services-pricing-section" id="services" ref={sectionRef}>
+      <div className="services-pricing-container">
+        
+        {/* Section Header */}
+        <div className="pricing-header-wrap">
+          <div className="pricing-badge-pill">
+            <span className="badge-dot"></span>
+            <span>PACKAGES & TAILORED SOLUTIONS</span>
+          </div>
+          <h3 className="pricing-title">Services & Pricing</h3>
+          <p className="pricing-subtitle">
+            Transparent pricing models and high-performance digital engineering. Select a structured package below or request a custom project brief.
           </p>
         </div>
         
@@ -305,8 +364,11 @@ const ServicesPricing = () => {
               key={category.id}
               className={`pricing-tab ${activeTab === category.id ? "active" : ""}`}
               onClick={() => setActiveTab(category.id)}
+              data-cursor="disable"
+              type="button"
             >
-              {category.title}
+              {category.icon}
+              <span>{category.title}</span>
             </button>
           ))}
         </div>
@@ -318,21 +380,27 @@ const ServicesPricing = () => {
               key={index} 
               className="pricing-card-tilt"
               tiltEnable={isDesktop}
-              tiltMaxAngleX={8} 
-              tiltMaxAngleY={8} 
+              tiltMaxAngleX={7} 
+              tiltMaxAngleY={7} 
               perspective={1000} 
               transitionSpeed={800} 
               scale={1.02} 
               gyroscope={false}
               glareEnable={isDesktop} 
-              glareMaxOpacity={0.12} 
+              glareMaxOpacity={0.10} 
               glarePosition="all"
             >
               <div className={`pricing-card ${tier.isPopular ? "popular" : ""}`}>
-                {tier.isPopular && <div className="popular-badge">Most Popular</div>}
+                {tier.isPopular && (
+                  <div className="popular-badge">
+                    <span>★ Most Popular</span>
+                  </div>
+                )}
                 
-                <div className="pricing-header">
-                  <h4 className="tier-name">{tier.name}</h4>
+                <div className="pricing-card-header">
+                  <div className="tier-header-top">
+                    <h4 className="tier-name">{tier.name}</h4>
+                  </div>
                   <div className="price-container">
                     <span className="fixed-price">{tier.price}</span>
                   </div>
@@ -341,77 +409,164 @@ const ServicesPricing = () => {
                 </div>
 
                 <div className="pricing-meta">
-                  <span className="meta-item">⏱ {tier.deliveryTime}</span>
-                  <span className="meta-item">🔄 {tier.revisions}</span>
+                  <div className="meta-item">
+                    <MdOutlineAccessTime className="meta-icon" />
+                    <span>{tier.deliveryTime}</span>
+                  </div>
+                  <div className="meta-item">
+                    <MdOutlineAutorenew className="meta-icon" />
+                    <span>{tier.revisions}</span>
+                  </div>
                 </div>
 
                 <div className="pricing-features">
-                  <h5>What's Included:</h5>
+                  <h5>What's Included</h5>
                   <ul>
                     {tier.features.map((feature, idx) => (
                       <li key={idx}>
-                        <FaCheck className="check-icon" /> {feature}
+                        <span className="feature-check">
+                          <MdOutlineCheckCircle />
+                        </span>
+                        <span className="feature-text">{feature}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <button 
-                  className="select-plan-btn"
-                  onClick={() => handleSelectTier(tier)}
-                >
-                  Choose {tier.name}
-                </button>
+                <div className="pricing-card-footer">
+                  <button 
+                    className={`pricing-btn ${tier.isPopular ? "popular-btn" : ""}`}
+                    onClick={() => handleSelectTier(tier)}
+                    data-cursor="disable"
+                    type="button"
+                  >
+                    <span>Choose {tier.name}</span>
+                    <MdOutlineArrowForward className="btn-arrow-icon" />
+                  </button>
+                </div>
               </div>
             </Tilt>
           ))}
         </div>
         
         {/* Customer Brief Section */}
-        <div className="customer-brief-section" ref={briefSectionRef}>
-          <div className="brief-content-wrapper">
-            <div className="hourly-content">
-              <h4>Submit a Project Brief</h4>
-              <p>Have a custom requirement? Share your project details and budget below, and I'll get back to you with a tailored quote.</p>
-            </div>
-            
-            <div className="brief-question-mark">
-              <div className="glowing-icon-wrapper">
-                <BsQuestionLg className="glowing-question" />
-              </div>
-            </div>
+        <div 
+          className={`customer-brief-section ${isHighlighted ? "highlighted-pulse" : ""}`} 
+          ref={briefSectionRef}
+        >
+          <div className="brief-header">
+            <h4>Submit a Custom Project Brief</h4>
+            <p className="brief-desc">
+              Have a tailored project, specific timeline, or unique scope? Share your requirements below to receive a personalized quote.
+            </p>
           </div>
 
+          {/* Selected Plan Indicator Banner */}
+          {selectedPlan && (
+            <div className="selected-plan-banner">
+              <div className="selected-plan-info">
+                <span className="selected-plan-tag">Selected Package</span>
+                <span className="selected-plan-name">
+                  <strong>{selectedPlan.tierName}</strong> ({selectedPlan.category} — {selectedPlan.price})
+                </span>
+              </div>
+              <button 
+                type="button" 
+                className="clear-plan-btn"
+                onClick={handleClearSelectedPlan}
+                data-cursor="disable"
+                title="Clear selected plan"
+              >
+                <MdClose />
+                <span>Clear Selection</span>
+              </button>
+            </div>
+          )}
+
           <form className="brief-form" onSubmit={handleQuoteSubmit}>
-            {submitStatus && (
-              <div className={`form-feedback ${submitStatus.includes('Error') ? 'error' : 'success'}`}>
-                {submitStatus}
+            {submitStatus === "success" && (
+              <div className="form-feedback success">
+                <MdOutlineCheckCircle className="feedback-icon" />
+                <span>Project brief submitted successfully! I'll review your details and get back to you shortly.</span>
               </div>
             )}
-            <div className="brief-input-group">
-              <input type="text" name="name" placeholder="Your Name" required className="brief-input" />
-              <input type="email" name="email" placeholder="Your Email" required className="brief-input" />
+            
+            {submitStatus === "error" && (
+              <div className="form-feedback error">
+                <MdClose className="feedback-icon" />
+                <span>Error submitting brief. Please try again or reach out directly at contact@brintadeb.com.</span>
+              </div>
+            )}
+
+            <div className="form-row two-col">
+              <div className="input-field-wrap">
+                <label className="input-label" htmlFor="brief-name">Your Name</label>
+                <input 
+                  id="brief-name"
+                  type="text" 
+                  name="name" 
+                  placeholder="e.g., Alex Morgan" 
+                  required 
+                  value={nameVal}
+                  onChange={(e) => setNameVal(e.target.value)}
+                  className="brief-input" 
+                  data-cursor="disable"
+                />
+              </div>
+              <div className="input-field-wrap">
+                <label className="input-label" htmlFor="brief-email">Your Email</label>
+                <input 
+                  id="brief-email"
+                  type="email" 
+                  name="email" 
+                  placeholder="e.g., alex@company.com" 
+                  required 
+                  value={emailVal}
+                  onChange={(e) => setEmailVal(e.target.value)}
+                  className="brief-input" 
+                  data-cursor="disable"
+                />
+              </div>
             </div>
-            <input 
-              type="text" 
-              name="budget" 
-              placeholder="Estimated Budget (e.g., ₹25,000)" 
-              required 
-              value={budgetVal}
-              onChange={(e) => setBudgetVal(e.target.value)}
-              className="brief-input" 
-            />
-            <textarea 
-              name="notes" 
-              placeholder="Tell me about your project..." 
-              rows={4} 
-              required 
-              value={notesVal}
-              onChange={(e) => setNotesVal(e.target.value)}
-              className="brief-input textarea"
-            ></textarea>
-            <button type="submit" className="contact-submit" disabled={isSubmitting}>
-              {isSubmitting ? "Sending..." : "Request Custom Quote"}
+
+            <div className="input-field-wrap">
+              <label className="input-label" htmlFor="brief-budget">Estimated Budget</label>
+              <input 
+                id="brief-budget"
+                type="text" 
+                name="budget" 
+                placeholder="e.g., ₹30,000 or $500" 
+                required 
+                value={budgetVal}
+                onChange={(e) => setBudgetVal(e.target.value)}
+                className="brief-input" 
+                data-cursor="disable"
+              />
+            </div>
+
+            <div className="input-field-wrap">
+              <label className="input-label" htmlFor="brief-notes">Project Scope & Requirements</label>
+              <textarea 
+                id="brief-notes"
+                name="notes" 
+                placeholder="Tell me about your project goals, target audience, deliverables, and timeline..." 
+                rows={4} 
+                required 
+                value={notesVal}
+                onChange={(e) => setNotesVal(e.target.value)}
+                className="brief-textarea"
+                data-cursor="disable"
+              ></textarea>
+            </div>
+
+            <button 
+              type="submit" 
+              className="brief-submit-btn" 
+              disabled={isSubmitting}
+              data-cursor="disable"
+            >
+              <span>{isSubmitting ? "Submitting Brief..." : "Request Custom Quote"}</span>
+              <MdSend className="btn-send-icon" />
             </button>
           </form>
         </div>
